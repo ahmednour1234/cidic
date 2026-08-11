@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" width="300" height="400" role="img" aria-label="صورة توضيحية">
+    <rect width="300" height="400" fill="#fae8ff"/>
+    <circle cx="150" cy="150" r="58" fill="#a21caf" opacity="0.28"/>
+    <path d="M150 220c-52 0-94 34-94 76v104h188V296c0-42-42-76-94-76z" fill="#a21caf" opacity="0.28"/>
+    <text x="150" y="172" font-family="Tajawal, Cairo, Arial, sans-serif" font-size="64"
+          font-weight="700" fill="#a21caf" text-anchor="middle">غ</text>
+</svg>

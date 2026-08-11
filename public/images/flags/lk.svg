@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" width="900" height="600" role="img" aria-label="Sri Lanka">
+    <rect width="900" height="600" fill="#ffbe29"/>
+    <rect x="50" y="50" width="180" height="500" fill="#00534e"/>
+    <rect x="230" y="50" width="150" height="500" fill="#eb7400"/>
+    <rect x="400" y="50" width="450" height="500" fill="#8d153a"/>
+    <path d="M625 150c40 0 70 30 70 70v160c0 40-30 70-70 70s-70-30-70-70V220c0-40 30-70 70-70z" fill="#ffbe29"/>
+</svg>

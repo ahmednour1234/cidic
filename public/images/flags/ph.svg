@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" width="900" height="600" role="img" aria-label="Philippines">
+    <rect width="900" height="300" fill="#0038a8"/>
+    <rect y="300" width="900" height="300" fill="#ce1126"/>
+    <path d="M0 0v600l390-300z" fill="#fff"/>
+    <circle cx="130" cy="300" r="62" fill="#fcd116"/>
+    <g fill="#fcd116">
+        <circle cx="60" cy="130" r="14"/>
+        <circle cx="60" cy="470" r="14"/>
+        <circle cx="310" cy="300" r="14"/>
+    </g>
+</svg>

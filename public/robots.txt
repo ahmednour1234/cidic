@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# The dashboard is private.
+Disallow: /admin
+Disallow: /admin/
+
+Sitemap: /sitemap.xml

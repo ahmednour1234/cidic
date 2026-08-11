@@ -1,0 +1,15 @@
+*
+!.gitignore
+
+# Brand and site assets are part of the project, so they ship with the repo.
+!site/
+!site/**
+
+# Placeholder candidate portraits generated for the demo seed data.
+!candidates/
+!candidates/photos/
+!candidates/photos/*.svg
+
+# Uploaded CVs and real candidate media stay local.
+candidates/cvs/
+candidates/videos/

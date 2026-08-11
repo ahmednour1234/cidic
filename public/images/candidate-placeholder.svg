@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" width="300" height="400" role="img" aria-label="لا توجد صورة">
+    <rect width="300" height="400" fill="#f5f8fb"/>
+    <circle cx="150" cy="155" r="58" fill="#dce6f0"/>
+    <path d="M150 228c-52 0-94 34-94 76v96h188v-96c0-42-42-76-94-76z" fill="#dce6f0"/>
+    <text x="150" y="366" font-family="Tajawal, Cairo, Arial, sans-serif" font-size="18" fill="#8b9bb0" text-anchor="middle">
+        لا توجد صورة
+    </text>
+</svg>

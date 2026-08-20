@@ -45,10 +45,6 @@ class AppServiceProvider extends ServiceProvider
             return static::documentRootPath($path);
         });
 
-        // config/filesystems.php cannot do this itself: config is resolved (and
-        // cached) before a request exists, so the prefix has to be applied here.
-        config(['filesystems.disks.public.url' => static::documentRootPath('storage')]);
-
         $this->registerGates();
         $this->shareViewData();
     }

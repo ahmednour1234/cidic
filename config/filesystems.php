@@ -39,12 +39,15 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            // Root-relative so uploaded media resolves against whatever host and
-            // port the site is actually served on, rather than a fixed APP_URL.
-            // AppServiceProvider overrides this per request to add the
-            // subdirectory prefix; config cannot, as it is resolved (and cached)
-            // before a request exists.
-            'url' => '/storage',
+            // Root-relative, so media resolves against whatever host serves the
+            // page rather than a fixed domain, but carrying the subdirectory an
+            // install is served from (ASSET_URL=https://host/public -> /public).
+            // Set here rather than at runtime: the disk is built once, on first
+            // use, so a later override does not reach an already-resolved disk.
+            'url' => rtrim(
+                (string) parse_url((string) env('ASSET_URL', env('APP_URL')), PHP_URL_PATH),
+                '/'
+            ) . '/storage',
             'visibility' => 'public',
             'throw' => false,
         ],

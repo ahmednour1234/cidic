@@ -64,98 +64,42 @@
                     </div>
                 </div>
 
-                {{-- ---------------- Details ---------------- --}}
+                {{-- ---------------- CV document ---------------- --}}
                 <div class="col-lg-8">
-                    <div class="d-flex flex-wrap align-items-center gap-3 mb-4">
+                    <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
                         <h2 class="mb-0">{{ $candidate->name }}</h2>
                         <span class="badge bg-primary-subtle text-primary-emphasis" dir="ltr">
                             {{ $candidate->reference_number }}
                         </span>
                     </div>
 
-                    <ul class="spec-list mb-4">
-                        <li class="spec-list__item">
-                            <span class="spec-list__label">الجنسية</span>
-                            <span class="spec-list__value">{{ $candidate->nationality?->name_ar ?? '—' }}</span>
-                        </li>
-                        @if ($candidate->display_age)
-                            <li class="spec-list__item">
-                                <span class="spec-list__label">العمر</span>
-                                <span class="spec-list__value">{{ $candidate->display_age }} سنة</span>
-                            </li>
-                        @endif
-                        <li class="spec-list__item">
-                            <span class="spec-list__label">المهنة</span>
-                            <span class="spec-list__value">{{ $candidate->profession }}</span>
-                        </li>
-                        <li class="spec-list__item">
-                            <span class="spec-list__label">سنوات الخبرة</span>
-                            <span class="spec-list__value">{{ $candidate->years_of_experience }} سنوات</span>
-                        </li>
-                        <li class="spec-list__item">
-                            <span class="spec-list__label">اللغات</span>
-                            <span class="spec-list__value">{{ $candidate->languages_label }}</span>
-                        </li>
-                        <li class="spec-list__item">
-                            <span class="spec-list__label">التصنيف</span>
-                            <span class="spec-list__value">{{ $candidate->category?->name_ar ?? '—' }}</span>
-                        </li>
-                        @if ($candidate->religion)
-                            <li class="spec-list__item">
-                                <span class="spec-list__label">الديانة</span>
-                                <span class="spec-list__value">{{ $candidate->religion }}</span>
-                            </li>
-                        @endif
-                        @if ($candidate->marital_status)
-                            <li class="spec-list__item">
-                                <span class="spec-list__label">الحالة الاجتماعية</span>
-                                <span class="spec-list__value">
-                                    {{ ['single' => 'عزباء', 'married' => 'متزوجة', 'divorced' => 'مطلقة', 'widowed' => 'أرملة'][$candidate->marital_status] ?? $candidate->marital_status }}
-                                </span>
-                            </li>
-                        @endif
-                        @if ($candidate->education)
-                            <li class="spec-list__item">
-                                <span class="spec-list__label">المؤهل</span>
-                                <span class="spec-list__value">{{ $candidate->education }}</span>
-                            </li>
-                        @endif
-                        @if (! is_null($candidate->children_count))
-                            <li class="spec-list__item">
-                                <span class="spec-list__label">عدد الأبناء</span>
-                                <span class="spec-list__value">{{ $candidate->children_count }}</span>
-                            </li>
-                        @endif
-                        @if ($candidate->salary)
-                            <li class="spec-list__item">
-                                <span class="spec-list__label">الراتب</span>
-                                <span class="spec-list__value">{{ number_format((float) $candidate->salary) }} ريال</span>
-                            </li>
-                        @endif
-                    </ul>
+                    {{-- The PDF is the profile: every detail lives inside it, so
+                         nothing here repeats what the document already states. --}}
+                    <div class="cv-viewer">
+                        <div class="cv-viewer__bar">
+                            <span class="cv-viewer__label">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"
+                                          stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                                    <path d="M14 3v5h5" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                                </svg>
+                                السيرة الذاتية
+                            </span>
 
-                    @if (filled($candidate->skills))
-                        <h3 class="h5 mb-3">المهارات</h3>
-                        <div class="mb-4">
-                            @foreach ((array) $candidate->skills as $skill)
-                                <span class="skill-chip">{{ $skill }}</span>
-                            @endforeach
+                            <a href="{{ $candidate->cv_file_url }}" target="_blank" rel="noopener"
+                               class="cv-viewer__open">فتح في نافذة جديدة</a>
                         </div>
-                    @endif
 
-                    @if (filled($candidate->previous_countries))
-                        <h3 class="h5 mb-3">دول الخبرة السابقة</h3>
-                        <div class="mb-4">
-                            @foreach ((array) $candidate->previous_countries as $country)
-                                <span class="skill-chip">{{ $country }}</span>
-                            @endforeach
-                        </div>
-                    @endif
-
-                    @if ($candidate->description)
-                        <h3 class="h5 mb-3">نبذة</h3>
-                        <p style="line-height: 2; color: var(--muted);">{{ $candidate->description }}</p>
-                    @endif
+                        <object data="{{ $candidate->cv_file_url }}#view=FitH"
+                                type="application/pdf" class="cv-viewer__frame"
+                                aria-label="السيرة الذاتية للمرشحة {{ $candidate->name }}">
+                            <div class="cv-viewer__fallback">
+                                <p class="mb-3">لا يمكن عرض الملف داخل المتصفح.</p>
+                                <a href="{{ $candidate->cv_file_url }}" target="_blank" rel="noopener"
+                                   class="btn btn-primary btn-pill">تحميل السيرة الذاتية (PDF)</a>
+                            </div>
+                        </object>
+                    </div>
 
                     @if ($candidate->intro_video_url)
                         <h3 class="h5 mb-3 mt-4">الفيديو التعريفي</h3>
@@ -163,17 +107,6 @@
                             <source src="{{ $candidate->intro_video_url }}">
                             متصفحك لا يدعم تشغيل الفيديو.
                         </video>
-                    @endif
-
-                    @if ($candidate->cv_file_url)
-                        <h3 class="h5 mb-3 mt-4">معاينة السيرة الذاتية</h3>
-                        <object data="{{ $candidate->cv_file_url }}" type="application/pdf"
-                                width="100%" height="520" style="border-radius: var(--radius); border: 1px solid var(--border);">
-                            <p class="mb-0 p-3">
-                                لا يمكن عرض الملف داخل المتصفح.
-                                <a href="{{ $candidate->cv_file_url }}" target="_blank" rel="noopener">اضغط هنا للتحميل</a>.
-                            </p>
-                        </object>
                     @endif
                 </div>
             </div>

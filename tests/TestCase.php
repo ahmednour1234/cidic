@@ -109,6 +109,9 @@ abstract class TestCase extends BaseTestCase
             'language_english' => 'basic',
             'availability_status' => AvailabilityStatus::Available,
             'is_active' => true,
+            // Publicly listable candidates must carry a CV, so the default
+            // fixture has one; pass cv_file => null to test the exclusion.
+            'cv_file' => 'candidates/cvs/test-fixture.pdf',
         ], $attributes));
 
         if (str_starts_with((string) $candidate->reference_number, 'TMP-')) {

@@ -41,8 +41,10 @@ class CandidateController extends Controller
 
     public function show(Candidate $candidate): View
     {
-        // Inactive profiles are not publicly reachable.
-        if (! $candidate->is_active) {
+        // Inactive profiles, and those with no uploaded CV, are not publicly
+        // reachable — matching the active() scope used by the listings so a
+        // direct URL cannot bypass it.
+        if (! $candidate->is_active || blank($candidate->cv_file)) {
             throw new NotFoundHttpException();
         }
 

@@ -161,3 +161,7 @@
         </div>
     </section>
 @endsection
+
+@push('scripts')
+    @vite('resources/js/cv-thumbs.js')
+@endpush

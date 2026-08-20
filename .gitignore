@@ -21,3 +21,12 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+# Uploaded candidate documents contain personal data (passport details, photos)
+# and must never reach the repository. Demo placeholder images stay tracked.
+/storage/app/public/candidates/cvs/
+/storage/app/public/candidates/videos/
+/public/*.pdf
+
+# Raw artwork drops; the working copy lives in storage/app/public/site/.
+/public/images/ChatGPT Image*

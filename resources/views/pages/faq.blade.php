@@ -19,7 +19,7 @@
     <section class="section">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-lg-9">
+                <div class="col-lg-9" data-reveal>
                     @if ($faqs->isNotEmpty())
                         <div class="accordion" id="faqPageAccordion">
                             @foreach ($faqs as $index => $faq)

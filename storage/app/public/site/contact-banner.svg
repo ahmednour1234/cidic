@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="تواصل مع سدك للإستقدام">
+  <title>تواصل مع سدك للإستقدام</title>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#071c33"/>
+      <stop offset="0.45" stop-color="#0b355f"/>
+      <stop offset="1" stop-color="#0060a8"/>
+    </linearGradient>
+    <radialGradient id="aura" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#6fc0ff" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#6fc0ff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="glassA" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0.06"/>
+    </linearGradient>
+    <linearGradient id="brandBubble" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#1a86e0"/>
+      <stop offset="1" stop-color="#0052a3"/>
+    </linearGradient>
+    <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7ec2f2" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#7ec2f2" stop-opacity="0.05"/>
+    </linearGradient>
+
+    <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="#03101f" flood-opacity="0.45"/>
+    </filter>
+    <filter id="tight" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="6" stdDeviation="9" flood-color="#03101f" flood-opacity="0.4"/>
+    </filter>
+    <filter id="blurGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+    <clipPath id="frame"><rect width="800" height="600" rx="0"/></clipPath>
+  </defs>
+
+  <g clip-path="url(#frame)">
+    <rect width="800" height="600" fill="url(#sky)"/>
+
+    <!-- Depth: soft auras -->
+    <circle cx="672" cy="112" r="290" fill="url(#aura)"/>
+    <circle cx="118" cy="536" r="250" fill="url(#aura)" opacity="0.55"/>
+
+    <!-- Subtle grid for structure -->
+    <g stroke="#8fd0ff" stroke-opacity="0.07" stroke-width="1">
+      <path d="M0 150h800M0 300h800M0 450h800M200 0v600M400 0v600M600 0v600"/>
+    </g>
+
+    <!-- Orbit rings behind the mark -->
+    <g fill="none" stroke="url(#ring)" transform="translate(400 250)">
+      <ellipse rx="196" ry="196" stroke-width="1.6" opacity="0.55"/>
+      <ellipse rx="150" ry="150" stroke-width="1.2" opacity="0.4" stroke-dasharray="4 10"/>
+    </g>
+
+    <!-- Glow behind flame -->
+    <ellipse cx="400" cy="238" rx="96" ry="118" fill="#2b9bf0" opacity="0.35" filter="url(#blurGlow)"/>
+
+    <!-- Brand flame mark (CIDIC logo silhouette) -->
+    <g transform="translate(400 240)" filter="url(#soft)">
+      <path d="M-16 -120 C -84 -54, -80 6, -30 50 C -5 74, 7 96, 0 124 C -50 86, -104 48, -104 -9 C -104 -64, -62 -104, -16 -120 Z"
+            fill="#9aa2a8" opacity="0.9"/>
+      <path d="M22 -120 C -46 -54, -42 6, 8 50 C 33 74, 45 96, 38 124 C -12 86, -66 48, -66 -9 C -66 -64, -24 -104, 22 -120 Z"
+            fill="#0f7ad4"/>
+      <path d="M22 -120 C -46 -54, -42 6, 8 50 C 20 62, 30 74, 35 86 C 26 66, 8 52, -6 38 C -34 10, -34 -34, 4 -84 Z"
+            fill="#ffffff" opacity="0.18"/>
+    </g>
+
+    <!-- Conversation: glass bubble (incoming) -->
+    <g filter="url(#tight)">
+      <path d="M150 392 h206 a30 30 0 0 1 30 30 v56 a30 30 0 0 1 -30 30 h-146 l-40 34 v-34 h-20 a30 30 0 0 1 -30 -30 v-56 a30 30 0 0 1 30 -30 z"
+            fill="url(#glassA)" stroke="#bfe2ff" stroke-opacity="0.3"/>
+      <rect x="178" y="420" width="150" height="12" rx="6" fill="#ffffff" fill-opacity="0.6"/>
+      <rect x="178" y="446" width="98" height="12" rx="6" fill="#ffffff" fill-opacity="0.32"/>
+    </g>
+
+    <!-- Conversation: brand bubble (reply) -->
+    <g filter="url(#tight)">
+      <path d="M444 446 h176 a30 30 0 0 1 30 30 v58 a30 30 0 0 1 -30 30 h-176 a30 30 0 0 1 -30 -30 v-14 l-34 -15 l34 -15 v-14 a30 30 0 0 1 30 -30 z"
+            fill="url(#brandBubble)"/>
+      <rect x="470" y="476" width="128" height="12" rx="6" fill="#ffffff" fill-opacity="0.85"/>
+      <rect x="470" y="502" width="84" height="12" rx="6" fill="#ffffff" fill-opacity="0.5"/>
+      <path d="M444 446 h176 a30 30 0 0 1 30 30 v10 h-236 v-10 a30 30 0 0 1 30 -30 z" fill="url(#sheen)" opacity="0.25"/>
+    </g>
+
+    <!-- Connection network -->
+    <g stroke="#8fd0ff" stroke-opacity="0.45" stroke-width="2" fill="none" stroke-linecap="round">
+      <path d="M76 300 C 170 246, 250 322, 300 286" stroke-dasharray="6 10"/>
+      <path d="M500 268 C 596 232, 664 306, 736 268" stroke-dasharray="6 10"/>
+      <path d="M120 168 C 210 130, 300 176, 336 150" stroke-dasharray="4 9" stroke-opacity="0.28"/>
+    </g>
+    <g fill="#9fd8ff">
+      <circle cx="76" cy="300" r="7"/>
+      <circle cx="736" cy="268" r="7"/>
+      <circle cx="120" cy="168" r="5" fill-opacity="0.6"/>
+      <circle cx="660" cy="150" r="4" fill-opacity="0.5"/>
+      <circle cx="238" cy="524" r="4" fill-opacity="0.45"/>
+    </g>
+
+    <!-- Vignette to seat the art in the card -->
+    <rect width="800" height="600" fill="none" stroke="#03101f" stroke-opacity="0.16" stroke-width="2"/>
+  </g>
+</svg>

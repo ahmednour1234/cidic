@@ -27,7 +27,9 @@ Pexels Licence — <https://www.pexels.com/license/>
 
 | File                      | Pexels photo ID | Used for                          |
 |---------------------------|-----------------|-----------------------------------|
-| `hero.jpg`                | 9462193         | Homepage hero + OpenGraph image   |
+| `hero-worker-scene.jpg`   | 9462161         | Homepage hero (full-bleed background) |
+| `hero-saudi.jpg`          | 9127761         | Spare (Saudi family, Eid table)    |
+| `hero.jpg`                | 9462193         | Spare single-image hero           |
 | `service-recruitment.jpg` | 9127761         | Service: الاستقدام                |
 | `service-rental.jpg`      | 4239146         | Service: الإيجار الشهري           |
 | `service-transfer.jpg`    | 7641003         | Service: نقل الخدمات              |

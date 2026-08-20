@@ -90,9 +90,16 @@ class Candidate extends Model
      | Scopes
      * ------------------------------------------------------------------ */
 
+    /**
+     * Publicly listable candidates.
+     *
+     * A CV is what the public pages actually present, so a record without an
+     * uploaded PDF is treated as incomplete and never surfaces publicly no
+     * matter how its is_active flag is set.
+     */
     public function scopeActive(Builder $query): Builder
     {
-        return $query->where('is_active', true);
+        return $query->where('is_active', true)->whereNotNull('cv_file')->where('cv_file', '!=', '');
     }
 
     public function scopeAvailable(Builder $query): Builder

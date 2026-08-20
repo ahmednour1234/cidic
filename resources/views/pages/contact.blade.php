@@ -19,8 +19,15 @@
     <section class="section">
         <div class="container">
             <div class="row g-4">
-                <div class="col-lg-4">
-                    <div class="card h-100">
+                <div class="col-lg-4" data-reveal="right">
+                    @if ($contactImage = setting_image('contact_image'))
+                        <img src="{{ $contactImage }}"
+                             alt=""
+                             aria-hidden="true"
+                             class="contact-banner mb-4">
+                    @endif
+
+                    <div class="card">
                         <div class="card-body p-4">
                             <h2 class="h6 mb-3">معلومات التواصل</h2>
 
@@ -51,7 +58,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-8">
+                <div class="col-lg-8" data-reveal="left" data-reveal-delay="120">
                     <div class="card">
                         <div class="card-body p-4">
                             <h2 class="h5 mb-4">أرسل لنا رسالة</h2>
@@ -118,6 +125,26 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    {{-- ==================== SUPPORT (split) ==================== --}}
+    <section class="section section--surface">
+        <div class="container">
+            <x-split-feature
+                reverse
+                image="{{ Illuminate\Support\Facades\Storage::url('site/service-transfer.jpg') }}"
+                alt="فريق خدمة العملاء"
+                eyebrow="خدمة العملاء"
+                title="فريق دعم جاهز للرد على استفساراتك"
+                text="سواء كنت تبدأ إجراءات الاستقدام أو تحتاج متابعة لطلب قائم، فريقنا متاح لمساعدتك عبر الهاتف والواتساب والبريد."
+                :items="[
+                    'رد سريع خلال ساعات العمل الرسمية',
+                    'متابعة حالة طلبك خطوة بخطوة',
+                    'دعم ما بعد الوصول وحل أي إشكال',
+                ]"
+                cta-label="تواصل عبر واتساب"
+                cta-url="{{ whatsapp_url('مرحباً، أرغب في الاستفسار عن خدمات الاستقدام.') }}" />
         </div>
     </section>
 @endsection

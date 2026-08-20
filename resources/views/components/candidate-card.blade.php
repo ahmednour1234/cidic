@@ -7,10 +7,21 @@
 <article class="candidate-card">
     <div class="candidate-card__media">
         <a href="{{ route('candidates.show', $candidate) }}" aria-label="عرض سيرة {{ $candidate->name }}">
-            <img src="{{ $candidate->profile_image_url }}"
-                 alt="صورة {{ $candidate->name }}"
-                 class="candidate-card__image"
-                 loading="lazy">
+            {{-- The card shows the CV itself: page one of the PDF is rendered
+                 into the canvas in the browser. Until it resolves (or if it
+                 fails) the placeholder underneath stays visible. --}}
+            <span class="cv-thumb" data-cv-thumb="{{ $candidate->cv_file_url }}">
+                <canvas class="cv-thumb__canvas" aria-hidden="true"></canvas>
+
+                <span class="cv-thumb__placeholder" aria-hidden="true">
+                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
+                        <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"
+                              stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                        <path d="M14 3v5h5" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                    </svg>
+                    <span class="cv-thumb__placeholder-text">السيرة الذاتية</span>
+                </span>
+            </span>
         </a>
 
         <span class="candidate-card__badge bg-{{ $status->badge() }}-subtle text-{{ $status->badge() }}-emphasis">
@@ -18,6 +29,17 @@
         </span>
 
         <span class="candidate-card__ref" dir="ltr">{{ $candidate->reference_number }}</span>
+
+        @if ($candidate->cv_file_url)
+            <span class="candidate-card__cv" aria-hidden="true">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+                    <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"
+                          stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M14 3v5h5" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                </svg>
+                <span>PDF</span>
+            </span>
+        @endif
     </div>
 
     <div class="candidate-card__body">

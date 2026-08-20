@@ -47,7 +47,8 @@ class StoreCandidateRequest extends FormRequest
 
             // Content-type and size are validated, not just the extension.
             'profile_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
-            'cv_file' => ['nullable', 'file', 'mimes:pdf', 'max:10240'],
+            // The CV is the product on the public pages, so it is mandatory.
+            'cv_file' => ['required', 'file', 'mimes:pdf', 'mimetypes:application/pdf', 'max:10240'],
             'intro_video' => ['nullable', 'file', 'mimetypes:video/mp4,video/webm', 'max:51200'],
 
             'availability_status' => ['required', Rule::in(AvailabilityStatus::values())],
@@ -67,6 +68,19 @@ class StoreCandidateRequest extends FormRequest
             'featured' => $this->boolean('featured'),
             'is_active' => $this->boolean('is_active'),
         ]);
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'cv_file.required' => 'يجب رفع ملف السيرة الذاتية (PDF) قبل حفظ السيرة.',
+            'cv_file.mimes' => 'يجب أن يكون ملف السيرة الذاتية بصيغة PDF.',
+            'cv_file.mimetypes' => 'يجب أن يكون ملف السيرة الذاتية بصيغة PDF.',
+            'cv_file.max' => 'حجم ملف السيرة الذاتية يجب ألا يتجاوز 10 ميجابايت.',
+        ];
     }
 
     /**

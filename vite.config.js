@@ -9,6 +9,7 @@ export default defineConfig({
                 'resources/css/site.css',
                 'resources/css/admin.css',
                 'resources/js/app.js',
+                'resources/js/cv-thumbs.js',
             ],
             refresh: true,
         }),

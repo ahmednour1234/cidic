@@ -33,12 +33,12 @@
         <section class="section section--surface">
             <div class="container">
                 <div class="text-center mb-5">
-                    <h2 class="section-title">لماذا نحن</h2>
+                    <h2 class="section-title" data-reveal>لماذا نحن</h2>
                 </div>
 
                 <div class="row g-4">
                     @foreach ($whyChooseUs as $item)
-                        <div class="col-sm-6 col-lg-3">
+                        <div class="col-sm-6 col-lg-3" data-reveal data-reveal-delay="{{ $loop->index * 100 }}">
                             <div class="feature-card">
                                 <div class="feature-card__icon" aria-hidden="true">
                                     {!! $item->icon ? e($item->icon) : '&#10003;' !!}
@@ -57,12 +57,12 @@
         <section class="section">
             <div class="container">
                 <div class="text-center mb-5">
-                    <h2 class="section-title">كيف نعمل</h2>
+                    <h2 class="section-title" data-reveal>كيف نعمل</h2>
                 </div>
 
                 <div class="row g-4">
                     @foreach ($howItWorks as $index => $step)
-                        <div class="col-sm-6 col-lg-3">
+                        <div class="col-sm-6 col-lg-3" data-reveal data-reveal-delay="{{ $loop->index * 100 }}">
                             <div class="step-card">
                                 <div class="step-card__number">{{ $index + 1 }}</div>
                                 <h3 class="feature-card__title">{{ $step->title }}</h3>

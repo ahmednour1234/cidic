@@ -73,3 +73,71 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 6000);
     });
 });
+
+/**
+ * Scroll reveal.
+ *
+ * The `js` class on <html> is what arms the CSS start-state, so it is only
+ * added when this script actually runs — without JS the content renders
+ * plainly rather than staying stuck at opacity 0.
+ *
+ * Elements opt in with data-reveal (optionally "left" | "right" | "zoom"),
+ * and data-reveal-delay="120" for a stagger in milliseconds.
+ */
+(() => {
+    const root = document.documentElement;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    // No IntersectionObserver, or the user asked for less motion: do nothing.
+    // The absence of `.js` leaves every element at its natural visible state.
+    if (!('IntersectionObserver' in window) || reduced.matches) {
+        return;
+    }
+
+    root.classList.add('js');
+
+    const reveal = (el) => {
+        const delay = Number(el.dataset.revealDelay || 0);
+        el.style.setProperty('--reveal-delay', `${delay}ms`);
+        el.classList.add('is-revealed');
+    };
+
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) {
+                    return;
+                }
+                reveal(entry.target);
+                observer.unobserve(entry.target);
+            });
+        },
+        { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+    );
+
+    const watch = () => {
+        document.querySelectorAll('[data-reveal]:not(.is-revealed)').forEach((el) => {
+            // Anything already in view on load is revealed immediately, so the
+            // first screen never waits for a scroll that may never come.
+            if (el.getBoundingClientRect().top < window.innerHeight) {
+                reveal(el);
+            } else {
+                observer.observe(el);
+            }
+        });
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', watch, { once: true });
+    } else {
+        watch();
+    }
+
+    // If the user switches on "reduce motion" mid-session, drop everything.
+    reduced.addEventListener('change', (event) => {
+        if (event.matches) {
+            observer.disconnect();
+            root.classList.remove('js');
+        }
+    });
+})();

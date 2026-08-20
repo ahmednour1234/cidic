@@ -6,98 +6,127 @@
 @section('content')
 
     {{-- ============================ HERO ============================ --}}
-    <section class="hero">
-        <div class="container">
-            <div class="row align-items-center g-4 g-lg-5 hero__inner">
-                <div class="col-lg-6">
-                    @php
-                        // The headline is stored as one string; the design highlights the
-                        // second line, so split on the newline the admin enters (if any).
-                        $heroTitle = setting('hero_title', "حلول موثوقة لاستقدام\nالعمالة المنزلية في السعودية");
-                        $heroLines = preg_split('/\r\n|\r|\n/', trim($heroTitle), 2);
-                    @endphp
+    @php
+        // Headline is stored as one string; the first line is plain and every
+        // line after it is highlighted, matching the reference design.
+        $heroTitle = setting('hero_title');
+        $heroLines = array_values(array_filter(array_map(
+            'trim',
+            preg_split('/\r\n|\r|\n/', (string) $heroTitle)
+        ), 'strlen'));
 
-                    <h1 class="hero__title">
-                        {{ $heroLines[0] }}
-                        @if (! empty($heroLines[1]))
-                            <span class="d-block">{{ $heroLines[1] }}</span>
-                        @endif
+        if (empty($heroLines)) {
+            $heroLines = ['حلول موثوقة', 'لاستقدام العمالة المنزلية', 'في السعودية'];
+        }
+
+        // Prefer a hand-dropped site/hero-main.* over the configured settings,
+        // so replacing the hero art needs no admin step: drop the file in
+        // storage/app/public/site/ and it is picked up on the next request.
+        $heroPhoto = null;
+
+        foreach (['jpg', 'jpeg', 'png', 'webp'] as $ext) {
+            if (is_file(storage_path("app/public/site/hero-main.{$ext}"))) {
+                // Root-relative, matching setting_image(), so the URL is not
+                // pinned to whichever host rendered the page.
+                $heroPhoto = Illuminate\Support\Facades\Storage::url("site/hero-main.{$ext}");
+                break;
+            }
+        }
+
+        $heroPhoto = $heroPhoto
+            ?: setting_image('hero_background_image')
+            ?: setting_image('hero_image');
+
+        // Decorative backdrop behind the whole hero band. Same drop-in rule as
+        // the photo: site/hero-bg-art.* wins, otherwise the CSS-drawn shapes.
+        $heroArt = null;
+
+        foreach (['png', 'jpg', 'jpeg', 'webp', 'svg'] as $ext) {
+            if (is_file(storage_path("app/public/site/hero-bg-art.{$ext}"))) {
+                $heroArt = Illuminate\Support\Facades\Storage::url("site/hero-bg-art.{$ext}");
+                break;
+            }
+        }
+    @endphp
+
+    <section class="hero-v2 {{ $heroArt ? 'hero-v2--art' : '' }}">
+        @if ($heroArt)
+            {{-- Supplied artwork replaces the CSS-drawn blob, dots and arc. --}}
+            <img src="{{ $heroArt }}" alt="" aria-hidden="true" decoding="async"
+                 class="hero-v2__art">
+        @else
+            <span class="hero-v2__blob" aria-hidden="true"></span>
+            <span class="hero-v2__dots" aria-hidden="true"></span>
+        @endif
+
+        <div class="container">
+            <div class="row align-items-center g-4 g-lg-5">
+                <div class="{{ $heroArt ? 'col-lg-6 offset-lg-1 hero-v2__copy' : 'col-lg-6' }} order-lg-2">
+                    <h1 class="hero-v2__title">
+                        {{ array_shift($heroLines) }}
+                        @foreach ($heroLines as $line)
+                            <span class="d-block">{{ $line }}</span>
+                        @endforeach
                     </h1>
 
-                    <p class="hero__text">
+                    <p class="hero-v2__text">
                         {{ setting('hero_subtitle', 'نوفر خدمات الاستقدام، الإيجار الشهري، ونقل الخدمات باحترافية وسرعة وفق الأنظمة المعتمدة.') }}
                     </p>
 
-                    <div class="hero__actions">
-                        <a href="{{ route('recruitment-requests.create') }}" class="btn btn-primary btn-lg btn-pill">
-                            اطلب الآن
+                    <div class="hero-v2__actions">
+                        <a href="{{ route('recruitment-requests.create') }}" class="btn btn-primary btn-lg btn-pill hero-v2__cta">
+                            <span>اطلب الآن</span>
+                            <span class="hero-v2__cta-icon" aria-hidden="true">&#8592;</span>
                         </a>
-                        <a href="{{ route('contact.create') }}" class="btn btn-outline-light btn-lg btn-pill">
-                            تواصل معنا
+                        <a href="{{ route('contact.create') }}" class="btn btn-lg btn-pill hero-v2__ghost">
+                            <span>تواصل معنا</span>
+                            <span class="hero-v2__ghost-icon" aria-hidden="true">&#9993;</span>
                         </a>
                     </div>
                 </div>
 
-                <div class="col-lg-6">
-                    @php
-                        // Composite hero: a background scene plus a cut-out subject.
-                        // Falls back to a single image, then to the brand panel.
-                        $heroScene = setting_image('hero_scene_image');
-                        $heroSubject = setting_image('hero_subject_image');
-                        $heroImage = setting_image('hero_image');
-                    @endphp
-
-                    <div class="hero__media">
-                        @if ($heroScene || $heroSubject)
-                            @if ($heroScene)
-                                <img src="{{ $heroScene }}" alt="" aria-hidden="true" class="hero__media-scene">
-                            @endif
-
-                            @if ($heroSubject)
-                                <img src="{{ $heroSubject }}"
-                                     alt="عاملة منزلية مدربة"
-                                     class="hero__media-subject">
-                            @endif
-                        @elseif ($heroImage)
-                            <img src="{{ $heroImage }}" alt="خدمات استقدام العمالة المنزلية" class="hero__image">
-                        @else
-                            <div class="hero__media-fallback">
-                                <div>
-                                    <div style="font-size: 2.6rem; font-weight: 800; letter-spacing: 0.04em;">CIDIC</div>
-                                    <p class="mb-0 mt-2 opacity-75">{{ setting('company_name_ar', 'سدك للإستقدام') }}</p>
-                                </div>
-                            </div>
-                        @endif
-
-                        <span class="hero__badge">
-                            @if ($badgeLogo = setting_image('logo'))
-                                <img src="{{ $badgeLogo }}"
-                                     alt="{{ setting('company_name_ar', 'سدك للإستقدام') }}"
-                                     class="hero__badge-img">
+                @unless ($heroArt)
+                    {{-- Without supplied artwork the hero draws its own arc-framed
+                         photo; the artwork already contains the subject. --}}
+                    <div class="col-lg-6 order-lg-1">
+                        <div class="hero-v2__media">
+                            <span class="hero-v2__arc" aria-hidden="true"></span>
+                            @if ($heroPhoto)
+                                <img src="{{ $heroPhoto }}"
+                                     alt="عاملة منزلية مدربة أثناء العمل"
+                                     class="hero-v2__photo">
                             @else
-                                <span class="hero__badge-mark">CIDIC</span>
-                                <span class="hero__badge-text">
-                                    {{ setting('company_name_en', 'CIDIC RECRUITMENT') }}
-                                    <span class="d-block" style="font-weight: 600; color: var(--muted);">
-                                        {{ setting('company_name_ar', 'سدك للإستقدام') }}
-                                    </span>
-                                </span>
+                                <div class="hero-v2__photo hero-v2__photo--fallback">
+                                    <span>CIDIC</span>
+                                </div>
                             @endif
-                        </span>
+                        </div>
                     </div>
-                </div>
+                @endunless
             </div>
         </div>
     </section>
 
-    {{-- ---- Trust bar overlapping the hero ---- --}}
+    {{-- ---- Feature cards overlapping the hero ---- --}}
     <div class="container">
-        <div class="trust-bar">
-            @foreach (['الالتزام بالأنظمة', 'عمالة مدربة', 'سرعة في الإنجاز'] as $point)
-                <span class="trust-point">
-                    <span class="trust-point__icon" aria-hidden="true">&#10003;</span>
-                    {{ $point }}
-                </span>
+        <div class="hero-features">
+            @php
+                $heroFeatures = [
+                    ['icon' => '&#128737;', 'title' => 'التزام بالأنظمة', 'text' => 'وفق أنظمة وزارة الموارد البشرية والتنمية الاجتماعية'],
+                    ['icon' => '&#128101;', 'title' => 'عمالة مدربة', 'text' => 'نختار أفضل الكفاءات بعد تدريب وتأهيل'],
+                    ['icon' => '&#9201;', 'title' => 'سرعة في الإنجاز', 'text' => 'إجراءات سريعة ومتابعة دقيقة حتى الوصول'],
+                    ['icon' => '&#127911;', 'title' => 'دعم متواصل', 'text' => 'فريق دعم جاهز للإجابة على استفساراتك'],
+                ];
+            @endphp
+
+            @foreach ($heroFeatures as $feature)
+                <div class="hero-feature" data-reveal data-reveal-delay="{{ $loop->index * 90 }}">
+                    <span class="hero-feature__icon" aria-hidden="true">{!! $feature['icon'] !!}</span>
+                    <span class="hero-feature__body">
+                        <span class="hero-feature__title">{{ $feature['title'] }}</span>
+                        <span class="hero-feature__text">{{ $feature['text'] }}</span>
+                    </span>
+                </div>
             @endforeach
         </div>
     </div>
@@ -106,14 +135,14 @@
     @if ($services->isNotEmpty())
         <section class="section" id="services">
             <div class="container">
-                <div class="section-heading">
+                <div class="section-heading" data-reveal>
                     <h2 class="section-title">خدماتنا</h2>
                     <a href="{{ route('services.index') }}" class="btn btn-link px-0">عرض الكل</a>
                 </div>
 
                 <div class="row g-3">
                     @foreach ($services as $service)
-                        <div class="col-md-6 col-lg-4">
+                        <div class="col-md-6 col-lg-4" data-reveal data-reveal-delay="{{ $loop->index * 90 }}">
                             <x-service-card :service="$service" />
                         </div>
                     @endforeach
@@ -126,13 +155,13 @@
     @if ($nationalities->isNotEmpty())
         <section class="section section--surface" id="nationalities">
             <div class="container">
-                <div class="section-heading">
+                <div class="section-heading" data-reveal>
                     <h2 class="section-title">الجنسيات المتاحة</h2>
                 </div>
 
                 <div class="row g-3">
                     @foreach ($nationalities as $nationality)
-                        <div class="col-6 col-md-4 col-lg-3 col-xl">
+                        <div class="col-6 col-md-4 col-lg-3 col-xl" data-reveal="zoom" data-reveal-delay="{{ $loop->index * 60 }}">
                             <x-nationality-card :nationality="$nationality" />
                         </div>
                     @endforeach
@@ -150,7 +179,7 @@
     {{-- ==================== FEATURED CVs ==================== --}}
     <section class="section" id="candidates">
         <div class="container">
-            <div class="section-heading">
+            <div class="section-heading" data-reveal>
                 <div>
                     <h2 class="section-title">السير الذاتية المتاحة</h2>
                     <p class="section-subtitle">
@@ -162,7 +191,7 @@
             @if ($candidates->isNotEmpty())
                 <div class="row g-3">
                     @foreach ($candidates as $candidate)
-                        <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="col-12 col-sm-6 col-lg-3" data-reveal data-reveal-delay="{{ $loop->index * 80 }}">
                             <x-candidate-card :candidate="$candidate" />
                         </div>
                     @endforeach
@@ -186,13 +215,13 @@
     @if ($howItWorks->isNotEmpty())
         <section class="section section--surface" id="how-it-works">
             <div class="container">
-                <div class="section-heading">
+                <div class="section-heading" data-reveal>
                     <h2 class="section-title">كيف نعمل</h2>
                 </div>
 
                 <div class="row g-3">
                     @foreach ($howItWorks as $index => $step)
-                        <div class="col-sm-6 col-lg-3">
+                        <div class="col-sm-6 col-lg-3" data-reveal data-reveal-delay="{{ $index * 100 }}">
                             <div class="feature-card">
                                 <span class="feature-card__icon-wrap">
                                     <span class="feature-card__icon" aria-hidden="true">
@@ -214,15 +243,36 @@
 
     {{-- ============================ WHY CHOOSE US ============================ --}}
     @if ($whyChooseUs->isNotEmpty())
+    {{-- ==================== PARTNERSHIP (split) ==================== --}}
+    <section class="section" id="partnership">
+        <div class="container">
+            <x-split-feature
+                image="{{ setting_image('about_image') ?: Illuminate\Support\Facades\Storage::url('site/about.jpg') }}"
+                alt="فريق سدك للإستقدام أثناء العمل"
+                eyebrow="لماذا سدك"
+                title="شريك موثوق في الاستقدام من أول خطوة حتى الوصول"
+                text="نتولى عنك كل التفاصيل: اختيار الكفاءات، إنهاء الإجراءات النظامية، والمتابعة حتى استلام العمالة في منزلك بكل يسر."
+                :items="[
+                    'ترخيص رسمي ومزاولة وفق أنظمة وزارة الموارد البشرية',
+                    'عقود واضحة بلا رسوم مفاجئة',
+                    'متابعة ما بعد الوصول وضمان الاستبدال',
+                ]"
+                badge-num="+٥٠٠٠"
+                badge-label="عملية استقدام ناجحة"
+                cta-label="تعرف علينا"
+                cta-url="{{ route('about') }}" />
+        </div>
+    </section>
+
         <section class="section" id="why-us">
             <div class="container">
-                <div class="section-heading">
+                <div class="section-heading" data-reveal>
                     <h2 class="section-title">لماذا نحن</h2>
                 </div>
 
                 <div class="row g-3">
                     @foreach ($whyChooseUs as $item)
-                        <div class="col-sm-6 col-lg-3">
+                        <div class="col-sm-6 col-lg-3" data-reveal data-reveal-delay="{{ $loop->index * 100 }}">
                             <div class="feature-card">
                                 <span class="feature-card__icon" aria-hidden="true">
                                     {!! $item->icon ? e($item->icon) : '&#10003;' !!}
@@ -243,7 +293,7 @@
     @if ($testimonials->isNotEmpty())
         <section class="section section--surface" id="testimonials">
             <div class="container">
-                <div class="section-heading">
+                <div class="section-heading" data-reveal>
                     <h2 class="section-title">آراء العملاء</h2>
 
                     @if ($testimonials->count() > 3)
@@ -291,7 +341,7 @@
     @if ($faqs->isNotEmpty())
         <section class="section" id="faq">
             <div class="container">
-                <div class="section-heading">
+                <div class="section-heading" data-reveal>
                     <h2 class="section-title">الأسئلة الشائعة</h2>
                 </div>
 
@@ -325,3 +375,7 @@
         </section>
     @endif
 @endsection
+
+@push('scripts')
+    @vite('resources/js/cv-thumbs.js')
+@endpush

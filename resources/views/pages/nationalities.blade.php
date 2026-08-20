@@ -25,7 +25,7 @@
 
                 <div class="row g-3 g-md-4">
                     @foreach ($nationalities as $nationality)
-                        <div class="col-6 col-md-4 col-lg-3">
+                        <div class="col-6 col-md-4 col-lg-3" data-reveal="zoom" data-reveal-delay="{{ $loop->index * 60 }}">
                             <x-nationality-card :nationality="$nationality" />
                         </div>
                     @endforeach

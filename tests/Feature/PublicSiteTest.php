@@ -160,4 +160,23 @@ class PublicSiteTest extends TestCase
         $response->assertHeader('Content-Type', 'application/xml');
         $response->assertSee('<urlset', false);
     }
+
+    public function test_candidate_without_cv_is_hidden_from_public_listing(): void
+    {
+        $withCv = $this->createCandidate(['name' => 'مرشحة بسيرة']);
+        $withoutCv = $this->createCandidate(['name' => 'مرشحة بلا سيرة', 'cv_file' => null]);
+
+        $response = $this->get(route('candidates.index'));
+
+        $response->assertOk();
+        $response->assertSee($withCv->reference_number);
+        $response->assertDontSee($withoutCv->reference_number);
+    }
+
+    public function test_candidate_without_cv_is_not_reachable_directly(): void
+    {
+        $candidate = $this->createCandidate(['cv_file' => null]);
+
+        $this->get(route('candidates.show', $candidate))->assertNotFound();
+    }
 }

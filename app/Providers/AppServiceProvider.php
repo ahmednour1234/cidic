@@ -12,6 +12,7 @@ use App\View\Composers\AdminNavComposer;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -35,6 +36,16 @@ class AppServiceProvider extends ServiceProvider
     {
         // Bootstrap 5 markup matches the admin/public styling.
         Paginator::useBootstrapFive();
+
+        // Emit built asset URLs relative to the document root instead of
+        // resolving them against APP_URL. A deployment whose APP_URL does not
+        // exactly match the served host would otherwise request every
+        // stylesheet from the wrong domain and render unstyled.
+        Vite::createAssetPathsUsing(static function (string $path, ?bool $secure = null): string {
+            $base = rtrim((string) parse_url((string) config('app.url'), PHP_URL_PATH), '/');
+
+            return $base . '/' . ltrim($path, '/');
+        });
 
         $this->registerGates();
         $this->shareViewData();

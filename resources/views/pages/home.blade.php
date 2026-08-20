@@ -25,7 +25,9 @@
         $heroPhoto = null;
 
         foreach (['jpg', 'jpeg', 'png', 'webp'] as $ext) {
-            if (is_file(storage_path("app/public/site/hero-main.{$ext}"))) {
+            // Ask the disk rather than is_file(): shared hosts with open_basedir
+            // report false for a file that exists and serves fine.
+            if (Illuminate\Support\Facades\Storage::disk('public')->exists("site/hero-main.{$ext}")) {
                 // Root-relative, matching setting_image(), so the URL is not
                 // pinned to whichever host rendered the page.
                 $heroPhoto = Illuminate\Support\Facades\Storage::url("site/hero-main.{$ext}");
@@ -42,7 +44,7 @@
         $heroArt = null;
 
         foreach (['png', 'jpg', 'jpeg', 'webp', 'svg'] as $ext) {
-            if (is_file(storage_path("app/public/site/hero-bg-art.{$ext}"))) {
+            if (Illuminate\Support\Facades\Storage::disk('public')->exists("site/hero-bg-art.{$ext}")) {
                 $heroArt = Illuminate\Support\Facades\Storage::url("site/hero-bg-art.{$ext}");
                 break;
             }

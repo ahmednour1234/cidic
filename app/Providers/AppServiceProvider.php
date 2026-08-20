@@ -9,7 +9,6 @@ use App\Services\FileUploadService;
 use App\Services\ReferenceNumberService;
 use App\Services\SettingService;
 use App\View\Composers\AdminNavComposer;
-use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\View;
@@ -58,19 +57,21 @@ class AppServiceProvider extends ServiceProvider
      * Prefix a path with the subdirectory the app is served from.
      *
      * The prefix comes from the live request, so an install served from a
-     * subdirectory (.../public/) resolves correctly even when APP_URL was never
-     * updated for the host. APP_URL's path is the fallback for CLI contexts,
-     * where no request exists.
+     * subdirectory (.../public/) resolves correctly even when APP_URL does not
+     * match the host. Under `artisan` there is no served request, so APP_URL's
+     * path stands in instead.
      */
     protected static function documentRootPath(string $path): string
     {
-        $request = request();
+        // A served request is authoritative even when its base path is empty:
+        // that means a document-root install. Only fall back to APP_URL when
+        // running under `artisan`, where the container still holds a Request
+        // synthesised from CLI globals whose base path is meaningless.
+        $base = app()->runningInConsole()
+            ? trim((string) parse_url((string) config('app.url'), PHP_URL_PATH), '/')
+            : trim((string) request()->getBasePath(), '/');
 
-        $base = $request instanceof Request
-            ? $request->getBasePath()
-            : (string) parse_url((string) config('app.url'), PHP_URL_PATH);
-
-        return rtrim($base, '/') . '/' . ltrim($path, '/');
+        return ($base === '' ? '' : '/' . $base) . '/' . ltrim($path, '/');
     }
 
     /**

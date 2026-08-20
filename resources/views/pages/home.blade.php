@@ -30,7 +30,7 @@
             if (Illuminate\Support\Facades\Storage::disk('public')->exists("site/hero-main.{$ext}")) {
                 // Root-relative, matching setting_image(), so the URL is not
                 // pinned to whichever host rendered the page.
-                $heroPhoto = Illuminate\Support\Facades\Storage::url("site/hero-main.{$ext}");
+                $heroPhoto = storage_url("site/hero-main.{$ext}");
                 break;
             }
         }
@@ -45,7 +45,7 @@
 
         foreach (['png', 'jpg', 'jpeg', 'webp', 'svg'] as $ext) {
             if (Illuminate\Support\Facades\Storage::disk('public')->exists("site/hero-bg-art.{$ext}")) {
-                $heroArt = Illuminate\Support\Facades\Storage::url("site/hero-bg-art.{$ext}");
+                $heroArt = storage_url("site/hero-bg-art.{$ext}");
                 break;
             }
         }
@@ -249,7 +249,7 @@
     <section class="section" id="partnership">
         <div class="container">
             <x-split-feature
-                image="{{ setting_image('about_image') ?: Illuminate\Support\Facades\Storage::url('site/about.jpg') }}"
+                image="{{ setting_image('about_image') ?: storage_url('site/about.jpg') }}"
                 alt="فريق سدك للإستقدام أثناء العمل"
                 eyebrow="لماذا سدك"
                 title="شريك موثوق في الاستقدام من أول خطوة حتى الوصول"

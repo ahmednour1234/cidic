@@ -133,7 +133,7 @@
         <div class="container">
             <x-split-feature
                 reverse
-                image="{{ Illuminate\Support\Facades\Storage::url('site/service-transfer.jpg') }}"
+                image="{{ storage_url('site/service-transfer.jpg') }}"
                 alt="فريق خدمة العملاء"
                 eyebrow="خدمة العملاء"
                 title="فريق دعم جاهز للرد على استفساراتك"

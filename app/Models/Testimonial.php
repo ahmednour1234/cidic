@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 
 class Testimonial extends Model
 {
@@ -42,6 +41,6 @@ class Testimonial extends Model
 
     public function getAvatarUrlAttribute(): ?string
     {
-        return $this->avatar ? Storage::url($this->avatar) : null;
+        return $this->avatar ? storage_url($this->avatar) : null;
     }
 }

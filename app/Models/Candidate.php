@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Storage;
 
 class Candidate extends Model
 {
@@ -145,18 +144,18 @@ class Candidate extends Model
     public function getProfileImageUrlAttribute(): string
     {
         return $this->profile_image
-            ? Storage::url($this->profile_image)
+            ? storage_url($this->profile_image)
             : asset('images/candidate-placeholder.svg');
     }
 
     public function getCvFileUrlAttribute(): ?string
     {
-        return $this->cv_file ? Storage::url($this->cv_file) : null;
+        return $this->cv_file ? storage_url($this->cv_file) : null;
     }
 
     public function getIntroVideoUrlAttribute(): ?string
     {
-        return $this->intro_video ? Storage::url($this->intro_video) : null;
+        return $this->intro_video ? storage_url($this->intro_video) : null;
     }
 
     /** Age falls back to date_of_birth when not explicitly stored. */

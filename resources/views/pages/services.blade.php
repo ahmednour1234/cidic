@@ -39,7 +39,7 @@
     <section class="section section--surface">
         <div class="container">
             <x-split-feature
-                image="{{ Illuminate\Support\Facades\Storage::url('site/service-recruitment.jpg') }}"
+                image="{{ storage_url('site/service-recruitment.jpg') }}"
                 alt="إجراءات الاستقدام"
                 eyebrow="آلية العمل"
                 title="إجراءات واضحة ومتابعة دقيقة حتى الوصول"
@@ -59,7 +59,7 @@
         <div class="container">
             <x-split-feature
                 reverse
-                image="{{ Illuminate\Support\Facades\Storage::url('site/service-rental.jpg') }}"
+                image="{{ storage_url('site/service-rental.jpg') }}"
                 alt="عمالة منزلية مدربة"
                 eyebrow="الجودة"
                 title="كفاءات مدربة تُختار بعناية قبل ترشيحها لك"

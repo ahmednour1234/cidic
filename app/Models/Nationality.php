@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Storage;
 
 class Nationality extends Model
 {
@@ -59,7 +58,7 @@ class Nationality extends Model
 
     public function getFlagUrlAttribute(): ?string
     {
-        return $this->flag ? Storage::url($this->flag) : null;
+        return $this->flag ? storage_url($this->flag) : null;
     }
 
     public function getNameAttribute(): string

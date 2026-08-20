@@ -80,8 +80,28 @@ if (! function_exists('setting_image')) {
             return (string) $path;
         }
 
-        $url = Illuminate\Support\Facades\Storage::url((string) $path);
+        $url = storage_url((string) $path);
 
         return $absolute ? url($url) : $url;
+    }
+}
+
+if (! function_exists('storage_url')) {
+    /**
+     * URL for a file on the public disk.
+     *
+     * Built with asset() rather than Storage::url() so uploaded media resolves
+     * the same way the bundled flag images do. The public disk caches its 'url'
+     * on first use from ASSET_URL/APP_URL, so an install served from a
+     * subdirectory (…/public/) drops the prefix when that env is unset or the
+     * config cache is stale; asset() reads it per call and stays correct.
+     */
+    function storage_url(string $path): string
+    {
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return $path;
+        }
+
+        return asset('storage/' . ltrim($path, '/'));
     }
 }

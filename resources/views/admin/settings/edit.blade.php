@@ -50,7 +50,7 @@
                                                    class="form-control"
                                                    accept=".jpg,.jpeg,.png,.webp,.svg,.ico">
                                             @if ($setting->value)
-                                                <img src="{{ \Illuminate\Support\Facades\Storage::url($setting->value) }}"
+                                                <img src="{{ storage_url($setting->value) }}"
                                                      alt="" class="file-preview">
                                             @endif
                                         @elseif ($isTextarea)

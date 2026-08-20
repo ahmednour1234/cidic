@@ -9,6 +9,7 @@ use App\Services\FileUploadService;
 use App\Services\ReferenceNumberService;
 use App\Services\SettingService;
 use App\View\Composers\AdminNavComposer;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\View;
@@ -41,10 +42,20 @@ class AppServiceProvider extends ServiceProvider
         // resolving them against APP_URL. A deployment whose APP_URL does not
         // exactly match the served host would otherwise request every
         // stylesheet from the wrong domain and render unstyled.
+        //
+        // The prefix comes from the live request, so an install served from a
+        // subdirectory (.../public/) resolves correctly even when APP_URL was
+        // never updated for the host. APP_URL's path is only the fallback, for
+        // CLI contexts where no request exists. $secure is ignored on purpose:
+        // a root-relative URL inherits the scheme of the page requesting it.
         Vite::createAssetPathsUsing(static function (string $path, ?bool $secure = null): string {
-            $base = rtrim((string) parse_url((string) config('app.url'), PHP_URL_PATH), '/');
+            $request = request();
 
-            return $base . '/' . ltrim($path, '/');
+            $base = $request instanceof Request
+                ? $request->getBasePath()
+                : (string) parse_url((string) config('app.url'), PHP_URL_PATH);
+
+            return rtrim($base, '/') . '/' . ltrim($path, '/');
         });
 
         $this->registerGates();

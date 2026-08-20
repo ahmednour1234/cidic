@@ -39,15 +39,12 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            // Root-relative, so media resolves against whatever host serves the
-            // page rather than a fixed domain, but carrying the subdirectory an
-            // install is served from (ASSET_URL=https://host/public -> /public).
-            // Set here rather than at runtime: the disk is built once, on first
-            // use, so a later override does not reach an already-resolved disk.
-            'url' => rtrim(
-                (string) parse_url((string) env('ASSET_URL', env('APP_URL')), PHP_URL_PATH),
-                '/'
-            ) . '/storage',
+            // Built the same way the bundled flag images are, via ASSET_URL, so
+            // uploaded media and static assets agree on the subdirectory an
+            // install is served from. Set here rather than overridden at
+            // runtime: the disk is built once, on first use, and caches this
+            // value, so a later assignment never reaches it.
+            'url' => rtrim((string) env('ASSET_URL', env('APP_URL')), '/') . '/storage',
             'visibility' => 'public',
             'throw' => false,
         ],

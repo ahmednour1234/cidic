@@ -64,3 +64,30 @@ Route::get('/terms', [PageController::class, 'terms'])->name('terms');
 | SEO
 */
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
+
+/*
+| Uploaded media
+|
+| This host disables both symlink() and exec(), so public/storage cannot be
+| linked and a copied directory would go stale on every upload. Serving the
+| files through the app removes the need for either.
+*/
+Route::get('/storage/{path}', function (string $path) {
+    // Resolve before touching the disk: a traversing path (../../.env) must be
+    // rejected here rather than reaching the filesystem, and realpath() is what
+    // collapses the segments so the containment check below can be trusted.
+    $root = realpath(storage_path('app/public'));
+    $full = realpath($root . DIRECTORY_SEPARATOR . $path);
+
+    abort_if(
+        $root === false
+            || $full === false
+            || ! str_starts_with($full, $root . DIRECTORY_SEPARATOR)
+            || ! is_file($full),
+        404
+    );
+
+    return response()->file($full, [
+        'Cache-Control' => 'public, max-age=31536000',
+    ]);
+})->where('path', '.*')->name('storage.show');

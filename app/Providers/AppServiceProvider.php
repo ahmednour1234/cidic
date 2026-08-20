@@ -56,20 +56,26 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Prefix a path with the subdirectory the app is served from.
      *
-     * The prefix comes from the live request, so an install served from a
-     * subdirectory (.../public/) resolves correctly even when APP_URL does not
-     * match the host. Under `artisan` there is no served request, so APP_URL's
-     * path stands in instead.
+     * ASSET_URL, then APP_URL, then the request: configuration wins because it
+     * is explicit and identical in every context -- web, artisan and queue --
+     * whereas the request's base path is derived from SCRIPT_NAME and varies
+     * with how the host maps the URL onto the front controller. An install
+     * served from .../public/ therefore only needs the path stated once in
+     * .env, and a document-root install states nothing and gets no prefix.
      */
     protected static function documentRootPath(string $path): string
     {
-        // A served request is authoritative even when its base path is empty:
-        // that means a document-root install. Only fall back to APP_URL when
-        // running under `artisan`, where the container still holds a Request
-        // synthesised from CLI globals whose base path is meaningless.
-        $base = app()->runningInConsole()
-            ? trim((string) parse_url((string) config('app.url'), PHP_URL_PATH), '/')
-            : trim((string) request()->getBasePath(), '/');
+        foreach (['app.asset_url', 'app.url'] as $key) {
+            $configured = (string) config($key);
+
+            if ($configured !== '') {
+                $base = trim((string) parse_url($configured, PHP_URL_PATH), '/');
+
+                return ($base === '' ? '' : '/' . $base) . '/' . ltrim($path, '/');
+            }
+        }
+
+        $base = app()->runningInConsole() ? '' : trim((string) request()->getBasePath(), '/');
 
         return ($base === '' ? '' : '/' . $base) . '/' . ltrim($path, '/');
     }

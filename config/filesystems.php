@@ -41,7 +41,10 @@ return [
             'root' => storage_path('app/public'),
             // Root-relative so uploaded media resolves against whatever host and
             // port the site is actually served on, rather than a fixed APP_URL.
-            'url' => '/storage',
+            // The APP_URL path is preserved, so an install served from a
+            // subdirectory (…/cidic/public) still points at the right place
+            // instead of the domain root.
+            'url' => rtrim(parse_url((string) env('APP_URL'), PHP_URL_PATH) ?? '', '/') . '/storage',
             'visibility' => 'public',
             'throw' => false,
         ],

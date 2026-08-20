@@ -51,7 +51,9 @@ class DemoCandidateSeeder extends Seeder
                 ['slug' => Str::slug("{$name}-{$natSlug}-{$i}")],
                 [
                     // Placeholder; replaced with the id-derived reference below.
-                    'reference_number' => 'TMP-' . Str::uuid(),
+                    // Kept short: reference_number is a 32-char column, and a
+                    // full UUID would overflow it on strict engines like MySQL.
+                    'reference_number' => 'TMP-' . bin2hex(random_bytes(8)),
                     'name' => $name,
                     'nationality_id' => $nationalityId,
                     'candidate_category_id' => $categoryId,

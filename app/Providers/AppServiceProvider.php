@@ -38,28 +38,39 @@ class AppServiceProvider extends ServiceProvider
         // Bootstrap 5 markup matches the admin/public styling.
         Paginator::useBootstrapFive();
 
-        // Emit built asset URLs relative to the document root instead of
-        // resolving them against APP_URL. A deployment whose APP_URL does not
-        // exactly match the served host would otherwise request every
-        // stylesheet from the wrong domain and render unstyled.
-        //
-        // The prefix comes from the live request, so an install served from a
-        // subdirectory (.../public/) resolves correctly even when APP_URL was
-        // never updated for the host. APP_URL's path is only the fallback, for
-        // CLI contexts where no request exists. $secure is ignored on purpose:
-        // a root-relative URL inherits the scheme of the page requesting it.
+        // Built assets and uploaded media both resolve against the document
+        // root rather than APP_URL, so a deployment whose APP_URL does not
+        // match the served host still finds them. $secure is ignored on
+        // purpose: a root-relative URL inherits the requesting page's scheme.
         Vite::createAssetPathsUsing(static function (string $path, ?bool $secure = null): string {
-            $request = request();
-
-            $base = $request instanceof Request
-                ? $request->getBasePath()
-                : (string) parse_url((string) config('app.url'), PHP_URL_PATH);
-
-            return rtrim($base, '/') . '/' . ltrim($path, '/');
+            return static::documentRootPath($path);
         });
+
+        // config/filesystems.php cannot do this itself: config is resolved (and
+        // cached) before a request exists, so the prefix has to be applied here.
+        config(['filesystems.disks.public.url' => static::documentRootPath('storage')]);
 
         $this->registerGates();
         $this->shareViewData();
+    }
+
+    /**
+     * Prefix a path with the subdirectory the app is served from.
+     *
+     * The prefix comes from the live request, so an install served from a
+     * subdirectory (.../public/) resolves correctly even when APP_URL was never
+     * updated for the host. APP_URL's path is the fallback for CLI contexts,
+     * where no request exists.
+     */
+    protected static function documentRootPath(string $path): string
+    {
+        $request = request();
+
+        $base = $request instanceof Request
+            ? $request->getBasePath()
+            : (string) parse_url((string) config('app.url'), PHP_URL_PATH);
+
+        return rtrim($base, '/') . '/' . ltrim($path, '/');
     }
 
     /**

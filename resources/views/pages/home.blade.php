@@ -24,7 +24,7 @@
         // storage/app/public/site/ and it is picked up on the next request.
         $heroPhoto = null;
 
-        foreach (['jpg', 'jpeg', 'png', 'webp'] as $ext) {
+        foreach (['webp', 'jpg', 'jpeg', 'png'] as $ext) {
             // Ask the disk rather than is_file(): shared hosts with open_basedir
             // report false for a file that exists and serves fine.
             if (Illuminate\Support\Facades\Storage::disk('public')->exists("site/hero-main.{$ext}")) {
@@ -43,7 +43,7 @@
         // the photo: site/hero-bg-art.* wins, otherwise the CSS-drawn shapes.
         $heroArt = null;
 
-        foreach (['png', 'jpg', 'jpeg', 'webp', 'svg'] as $ext) {
+        foreach (['webp', 'png', 'jpg', 'jpeg', 'svg'] as $ext) {
             if (Illuminate\Support\Facades\Storage::disk('public')->exists("site/hero-bg-art.{$ext}")) {
                 $heroArt = storage_url("site/hero-bg-art.{$ext}");
                 break;
@@ -249,7 +249,7 @@
     <section class="section" id="partnership">
         <div class="container">
             <x-split-feature
-                image="{{ setting_image('about_image') ?: storage_url('site/about.jpg') }}"
+                image="{{ setting_image('about_image') ?: storage_url('site/about.webp') }}"
                 alt="فريق سدك للإستقدام أثناء العمل"
                 eyebrow="لماذا سدك"
                 title="شريك موثوق في الاستقدام من أول خطوة حتى الوصول"

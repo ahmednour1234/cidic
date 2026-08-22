@@ -42,7 +42,7 @@
                 var KEY = 'cidic:intro-shown';
                 var el = document.getElementById('introRequestModal');
 
-                if (!el || !window.bootstrap) return;
+                if (!el) return;
 
                 // A failed submit re-renders the page with old() values; reopening
                 // over them would hide the errors the visitor needs to see.
@@ -55,9 +55,17 @@
                     // Private mode or blocked storage: show it, just don't remember.
                 }
 
-                window.setTimeout(function () {
-                    bootstrap.Modal.getOrCreateInstance(el).show();
-                }, 1500);
+                var tries = 0;
+
+                (function open() {
+                    if (window.bootstrap && window.bootstrap.Modal) {
+                        window.bootstrap.Modal.getOrCreateInstance(el).show();
+                        return;
+                    }
+
+                    // Give the module bundle a moment, then give up quietly.
+                    if (++tries < 40) window.setTimeout(open, 100);
+                })();
             })();
         </script>
     @endpush

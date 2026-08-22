@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Enums\Permission;
+use App\Models\Service;
 use App\Models\User;
 use App\Services\ActivityLogger;
 use App\Services\FileUploadService;
@@ -100,5 +101,12 @@ class AppServiceProvider extends ServiceProvider
 
         // Sidebar badge counts, resolved only for the admin chrome.
         View::composer('admin.partials.sidebar', AdminNavComposer::class);
+
+        // The intro modal renders on every public page, so its service list is
+        // resolved here rather than threaded through each controller. Scoped to
+        // the partial so the query runs only when the modal is actually drawn.
+        View::composer('partials.intro-modal', function ($view) {
+            $view->with('introServices', Service::query()->active()->ordered()->get());
+        });
     }
 }

@@ -56,6 +56,7 @@
 
     @include('partials.footer')
     @include('partials.whatsapp')
+    @include('partials.intro-modal')
 
     @stack('scripts')
 </body>

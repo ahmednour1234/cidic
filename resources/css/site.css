@@ -1930,3 +1930,62 @@
 .candidate-card__media .cv-thumb {
     aspect-ratio: 3 / 4;
 }
+
+/* =====================================================================
+   Intro request modal
+   ---------------------------------------------------------------------
+   The shortened request form, surfaced shortly after landing. Sized to
+   stay fully readable on a phone: the dialog is allowed to grow, and the
+   body scrolls rather than the page behind it.
+   ===================================================================== */
+.intro-modal {
+    border: 0;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+}
+
+/* Brand band behind the title, so the modal reads as ours immediately. */
+.intro-modal .modal-header {
+    background: linear-gradient(135deg, var(--primary-light), var(--background));
+    padding-block: 1.25rem;
+}
+
+.intro-modal .modal-title {
+    color: var(--primary-dark);
+    font-weight: 700;
+}
+
+.intro-modal .modal-body {
+    padding: 1.5rem;
+    max-height: min(70vh, 34rem);
+    overflow-y: auto;
+}
+
+/* RTL: Bootstrap positions the close button for LTR headers. */
+[dir='rtl'] .intro-modal .btn-close {
+    margin-inline: 0 auto;
+}
+
+@media (max-width: 575.98px) {
+    .intro-modal {
+        border-radius: var(--radius);
+    }
+
+    .intro-modal .modal-body {
+        padding: 1.25rem 1rem;
+        max-height: 68vh;
+    }
+
+    /* A full-width target is easier to hit than a centred one on a phone. */
+    .intro-modal .btn-lg {
+        padding-block: 0.75rem;
+        font-size: 1rem;
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .intro-modal {
+        animation: cidic-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+}

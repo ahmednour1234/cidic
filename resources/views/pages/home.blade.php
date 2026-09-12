@@ -3,6 +3,18 @@
 @section('meta_title', setting('meta_title', 'سدك للإستقدام | حلول موثوقة لاستقدام العمالة المنزلية'))
 @section('meta_description', setting('meta_description'))
 
+{{-- Google tag (gtag.js) --}}
+@push('styles')
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MN342JKN0V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-MN342JKN0V');
+    </script>
+@endpush
+
 @section('content')
 
     {{-- ============================ HERO ============================ --}}

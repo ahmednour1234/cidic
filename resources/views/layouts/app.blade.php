@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    {{-- Facebook domain verification --}}
+    <meta name="facebook-domain-verification" content="xd5p4iyazukl3zefuznt1pyyct142r">
+
     @php
         $metaTitle = trim($__env->yieldContent('meta_title')) ?: setting('meta_title', setting('company_name_ar', 'سدك للإستقدام'));
         $metaDescription = trim($__env->yieldContent('meta_description')) ?: setting('meta_description', 'خدمات استقدام العمالة المنزلية في السعودية.');

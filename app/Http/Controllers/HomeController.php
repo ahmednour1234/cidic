@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Candidate;
 use App\Models\Faq;
 use App\Models\HowItWorks;
 use App\Models\Nationality;
@@ -26,16 +25,7 @@ class HomeController extends Controller
                 ->whereHas('workers', fn ($q) => $q->publiclyVisible())
                 ->withCount(['workers as candidates_count' => fn ($q) => $q->publiclyVisible()])
                 ->get(),
-            // Featured first, then any other available profile, to always fill the row.
-            'candidates' => Candidate::query()
-                ->with(['nationality:id,name_ar,slug,flag', 'category:id,name_ar,slug'])
-                ->active()
-                ->available()
-                ->orderByDesc('featured')
-                ->orderBy('sort_order')
-                ->orderByDesc('created_at')
-                ->limit(4)
-                ->get(),
+            // The homepage no longer lists CVs; the catalogue lives at /cvs.
             'howItWorks' => HowItWorks::query()->active()->ordered()->get(),
             'whyChooseUs' => WhyChooseUs::query()->active()->ordered()->get(),
             'testimonials' => Testimonial::query()->active()->ordered()->get(),

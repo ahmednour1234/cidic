@@ -190,41 +190,6 @@
         </section>
     @endif
 
-    {{-- ==================== FEATURED CVs ==================== --}}
-    <section class="section" id="candidates">
-        <div class="container">
-            <div class="section-heading" data-reveal>
-                <div>
-                    <h2 class="section-title">السير الذاتية المتاحة</h2>
-                    <p class="section-subtitle">
-                        تصفح السير الذاتية المتوفرة واختر العاملة المناسبة لاحتياجاتك وقدم طلبك مباشرة.
-                    </p>
-                </div>
-            </div>
-
-            @if ($candidates->isNotEmpty())
-                <div class="row g-3">
-                    @foreach ($candidates as $candidate)
-                        <div class="col-12 col-sm-6 col-lg-3" data-reveal data-reveal-delay="{{ $loop->index * 80 }}">
-                            <x-candidate-card :candidate="$candidate" />
-                        </div>
-                    @endforeach
-                </div>
-
-                <div class="text-center mt-4">
-                    <a href="{{ route('candidates.index') }}" class="btn btn-primary btn-pill">
-                        عرض جميع السير الذاتية
-                    </a>
-                </div>
-            @else
-                <div class="empty-state">
-                    <div class="empty-state__icon" aria-hidden="true">&#9776;</div>
-                    <p class="mb-0">لا توجد سير ذاتية متاحة حالياً. يرجى التواصل معنا لمعرفة التوفر.</p>
-                </div>
-            @endif
-        </div>
-    </section>
-
     {{-- ============================ HOW IT WORKS ============================ --}}
     @if ($howItWorks->isNotEmpty())
         <section class="section section--surface" id="how-it-works">

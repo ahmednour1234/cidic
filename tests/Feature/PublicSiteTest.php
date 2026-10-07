@@ -28,15 +28,28 @@ class PublicSiteTest extends TestCase
 
         $response->assertOk();
         $response->assertSee('حلول موثوقة', false);
-        $response->assertSee('السير الذاتية المتاحة', false);
     }
 
-    public function test_homepage_shows_only_active_records(): void
+    /**
+     * The homepage no longer lists CVs - the catalogue lives at /cvs - so no
+     * candidate should reach it, active or not.
+     */
+    public function test_homepage_does_not_list_candidates(): void
+    {
+        $candidate = $this->createCandidate(['name' => 'ظاهرة']);
+
+        $response = $this->get('/');
+
+        $response->assertOk();
+        $response->assertDontSee($candidate->reference_number);
+    }
+
+    public function test_candidates_page_shows_only_active_records(): void
     {
         $visible = $this->createCandidate(['name' => 'ظاهرة']);
         $hidden = $this->createCandidate(['name' => 'مخفية', 'is_active' => false]);
 
-        $response = $this->get('/');
+        $response = $this->get(route('candidates.index'));
 
         $response->assertOk();
         $response->assertSee($visible->reference_number);

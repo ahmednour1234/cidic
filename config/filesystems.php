@@ -49,6 +49,16 @@ return [
             'throw' => false,
         ],
 
+        // Worker CVs. Deliberately outside storage/app/public: these files are
+        // streamed through authorized controllers and must never be reachable
+        // through the storage symlink.
+        'cv_private' => [
+            'driver' => 'local',
+            'root' => storage_path('app/private/cv'),
+            'visibility' => 'private',
+            'throw' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

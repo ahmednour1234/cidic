@@ -8,9 +8,11 @@
         <div class="container">
             <a class="site-logo" href="{{ route('home') }}">
                 @if ($logo)
-                    {{-- The artwork already contains both the mark and the wordmark. --}}
                     <img src="{{ $logo }}" alt="{{ setting('company_name_ar', 'سدك للإستقدام') }}"
                          class="site-logo__img">
+                    {{-- The mark alone is hard to read at this size, so the
+                         name sits beside it. --}}
+                    <span class="site-logo__name">{{ setting('company_name_ar', 'سدك للإستقدام') }}</span>
                 @else
                     <span class="site-logo__mark">CIDIC</span>
                     <span>
@@ -27,30 +29,18 @@
             </button>
 
             <div class="collapse navbar-collapse" id="mainNav">
+                {{-- Four links only. The other pages (خدماتنا، الجنسيات،
+                     الأسئلة الشائعة …) stay live and are reached from the
+                     footer and from within the pages themselves. --}}
                 <ul class="navbar-nav site-nav mx-auto mb-3 mb-xl-0">
                     <li class="nav-item">
                         <a class="nav-link @if(request()->routeIs('home')) active @endif" href="{{ route('home') }}">الرئيسية</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link @if(request()->routeIs('services.*')) active @endif" href="{{ route('services.index') }}">خدماتنا</a>
+                        <a class="nav-link @if(request()->routeIs('cvs.*')) active @endif" href="{{ route('cvs.index') }}">السير الذاتية</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link @if(request()->routeIs('nationalities.*')) active @endif" href="{{ route('nationalities.index') }}">الجنسيات</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link @if(request()->routeIs('candidates.*')) active @endif" href="{{ route('candidates.index') }}">السير الذاتية</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('home') }}#how-it-works">كيف نعمل</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('home') }}#why-us">لماذا نحن</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('home') }}#testimonials">آراء العملاء</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link @if(request()->routeIs('faq')) active @endif" href="{{ route('faq') }}">الأسئلة الشائعة</a>
+                        <a class="nav-link @if(request()->routeIs('about')) active @endif" href="{{ route('about') }}">من نحن</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link @if(request()->routeIs('contact.*')) active @endif" href="{{ route('contact.create') }}">تواصل معنا</a>

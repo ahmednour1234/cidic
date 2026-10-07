@@ -8,6 +8,7 @@ export default defineConfig({
                 'resources/css/app.css',
                 'resources/css/site.css',
                 'resources/css/admin.css',
+                'resources/css/cv-panel.css',
                 'resources/js/app.js',
                 'resources/js/cv-thumbs.js',
             ],

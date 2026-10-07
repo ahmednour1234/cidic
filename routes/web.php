@@ -6,6 +6,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NationalityController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PublicCvController;
 use App\Http\Controllers\RecruitmentRequestController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SitemapController;
@@ -59,6 +60,23 @@ Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/faq', [PageController::class, 'faq'])->name('faq');
 Route::get('/privacy-policy', [PageController::class, 'privacyPolicy'])->name('privacy-policy');
 Route::get('/terms', [PageController::class, 'terms'])->name('terms');
+
+/*
+| Public CV catalogue
+|
+| Shows only CVs that are available and were never withdrawn; see
+| Worker::scopePubliclyVisible.
+*/
+Route::get('/cvs', [PublicCvController::class, 'index'])->name('cvs.index');
+Route::get('/cvs/{id}', [PublicCvController::class, 'show'])
+    ->whereNumber('id')
+    ->name('cvs.show');
+Route::get('/cvs/{id}/pdf', [PublicCvController::class, 'pdf'])
+    ->whereNumber('id')
+    ->name('cvs.pdf');
+Route::get('/nationality/{nationality}', [PublicCvController::class, 'index'])
+    ->where('nationality', '[A-Za-z0-9]{1,10}')
+    ->name('cvs.nationality');
 
 /*
 | SEO

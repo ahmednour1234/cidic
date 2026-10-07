@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             ReferenceDataSeeder::class,
             PageSeeder::class,
             DemoCandidateSeeder::class,
+            CvPanelSeeder::class,
         ]);
     }
 }

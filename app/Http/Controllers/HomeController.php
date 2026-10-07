@@ -17,10 +17,14 @@ class HomeController extends Controller
     {
         return view('pages.home', [
             'services' => Service::query()->active()->ordered()->get(),
+            // Counts the CV stock the public catalogue actually serves, and
+            // lists only nationalities that have something to show - an entry
+            // reading "0 سيرة متاحة" is just a dead end for the visitor.
             'nationalities' => Nationality::query()
                 ->active()
                 ->ordered()
-                ->withCount(['candidates' => fn ($q) => $q->active()->available()])
+                ->whereHas('workers', fn ($q) => $q->publiclyVisible())
+                ->withCount(['workers as candidates_count' => fn ($q) => $q->publiclyVisible()])
                 ->get(),
             // Featured first, then any other available profile, to always fill the row.
             'candidates' => Candidate::query()

@@ -235,3 +235,115 @@ resources/views/
   characters entirely, which would produce empty URLs.
 - Mail is optional: `MAIL_MAILER=log` by default and no feature depends on mail delivery.
 - Activity logging never throws — a logging failure cannot break a user request.
+
+---
+
+## لوحة السير الذاتية (CV Panel)
+
+A self-contained panel at `/cv-panel` where coordinators upload worker CVs (PDF)
+per nationality, customer-service agents reserve them for clients, and managers
+supervise. Public nationality pages show only CVs that are still available.
+
+### Roles
+
+Panel access is governed by `users.department` (separate from the `role` column
+that governs the main dashboard). A user with no department cannot reach the
+panel, even if they hold dashboard permissions. Super admins reach everything.
+
+| Department | Can do |
+|---|---|
+| `coordination` | Upload and delete CVs **in their own nationalities only**; follow up reserved CVs and mark them assigned. Cannot reserve. |
+| `customer_service` | Reserve CVs, search clients, and act on **their own** reservations. |
+| `branch_manager` | Reserve; manage panel users and coordinator↔nationality links. Cannot act on someone else's reservation. |
+
+Coordinators are scoped to the nationalities linked to them through the
+`admin_nationality` pivot. Everyone else sees all nationalities.
+
+### Flows
+
+**Upload** — pick a nationality, experience and religion (the last two are
+mandatory because the public site filters on them), then upload up to 100 PDFs
+at 10 MB each. The worker's name comes from the file name without its
+extension. A file whose name already exists is skipped and reported. An
+optional purge clears that nationality's stale CVs first; it never touches
+anything reserved, held for a client, or bound to a contract.
+
+**Reserve** — pick a registered client, or create one inline from just a name
+and phone (WhatsApp leads are usually unregistered). The row is re-read under a
+pessimistic lock, so two agents reserving the same CV cannot both succeed.
+
+**After reserving** — only the reserver or a super admin may cancel, record a
+Tamara payment, or create the contract. **Create contract** writes a
+`recruitment_contracts` row, moves the worker to `assigned`, and the row then
+leaves the panel list. `assigned` is the end of the cycle and cannot be undone
+from the panel.
+
+### Rules that the code enforces
+
+1. **A reservation never expires.** There is no release job, no expiry
+   reminder, and no notification text promising one. `RESERVATION_HOURS` is a
+   display constant only.
+2. **Withdrawal from the public site is permanent.** The first time a worker is
+   booked, `cv_withdrawn_at` is stamped. Cancelling the reservation does *not*
+   clear it — only `workers:restore-withdrawn` does.
+3. **`available` never coexists with a client or an open contract.** Enforced in
+   `Worker::booted()`. Every status change must go through Eloquent:
+   `Worker::where(...)->update(['status' => ...])` bypasses the guard and is the
+   bug that produced workers shown as "متاحة" while linked to a client.
+4. **Deletes are soft**, and a booked CV is never deletable. The row and the
+   file are both kept.
+5. **CV files live on the private `cv_private` disk** and are streamed through
+   authorized controllers with Range and ETag support. The stored file name is
+   never exposed; responses are always named `cv-{id}.pdf`.
+6. **Logging never blocks the action it records** — every write is wrapped.
+
+### Commands
+
+All default to a dry run; pass `--apply` to write.
+
+```bash
+php artisan workers:restore-withdrawn [--nationality=ID] [--apply]
+php artisan workers:fix-available-with-client [--apply]
+php artisan workers:sync-contract-status [--apply]
+```
+
+- `restore-withdrawn` — the only way a withdrawn CV returns to the public site.
+  Clears `cv_withdrawn_at` for CVs that are available, unbooked and uncontracted.
+- `fix-available-with-client` — repairs rows left inconsistent by a direct query
+  update: sets them to `assigned` and fills the client from the contract.
+- `sync-contract-status` — realigns statuses with contracts and clients.
+
+Nothing is scheduled: no cron job may change a reservation.
+
+### Setup
+
+```bash
+php artisan migrate
+php artisan db:seed --class=CvPanelSeeder   # default branch + nationality ISO codes
+npm run build
+```
+
+Then give at least one user a department:
+
+```php
+User::find(1)->update(['department' => 'coordination']);
+```
+
+### Public catalogue
+
+`/cvs`, `/nationality/{code}` (ISO alpha-2, e.g. `/nationality/et`), `/cvs/{id}`
+and `/cvs/{id}/pdf`. These show only workers matching
+`Worker::scopePubliclyVisible()` — active, available, with a file, never
+withdrawn. Passport and phone numbers are never rendered. Once a CV is reserved,
+its PDF route returns an "تم حجز هذه العاملة" page rather than a bare 404.
+
+### Tests
+
+```bash
+php artisan test tests/Feature/CvPanel
+```
+
+Covers the reservation race, the model guards, permanent withdrawal, the
+permission matrix per role, bulk delete skipping booked rows, duplicate-skip on
+upload, the public site hiding reserved and withdrawn CVs, and the PDF route
+after a reservation.

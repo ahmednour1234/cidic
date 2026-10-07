@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" width="900" height="600">
+  <title>Uganda</title>
+  <!-- Six equal bands: black, yellow, red, black, yellow, red. -->
+  <rect width="900" height="600" fill="#fcdc04"/>
+  <rect width="900" height="100" y="0"   fill="#000"/>
+  <rect width="900" height="100" y="100" fill="#fcdc04"/>
+  <rect width="900" height="100" y="200" fill="#d90000"/>
+  <rect width="900" height="100" y="300" fill="#000"/>
+  <rect width="900" height="100" y="400" fill="#fcdc04"/>
+  <rect width="900" height="100" y="500" fill="#d90000"/>
+  <!-- Central white disc carrying the grey crowned crane. -->
+  <circle cx="450" cy="300" r="100" fill="#fff"/>
+  <g fill="#9ca3af" stroke="#4b5563" stroke-width="4">
+    <ellipse cx="455" cy="315" rx="48" ry="32"/>
+    <path d="M470 292c0-18 12-30 28-30s26 11 26 26c0 8-4 14-10 18l-12 7z"/>
+    <circle cx="516" cy="280" r="14" fill="#e5e7eb"/>
+    <path d="M524 268c6-14 14-22 22-24-4 10-6 18-6 26z"/>
+    <path d="M528 286h22l-20 10z" fill="#d90000"/>
+    <path d="M440 345l-8 46h12l10-42zM470 345l-4 46h12l6-42z"/>
+    <path d="M414 300c-18-6-32-2-40 10 14 2 26 8 34 16z"/>
+  </g>
+</svg>

@@ -1,16 +1,13 @@
 @props(['nationality'])
 
 @php
-    // Fall back to a bundled flag by country code when no image is uploaded.
-    $code = strtolower((string) $nationality->country_code);
-    $bundled = $code !== '' && file_exists(public_path("images/flags/{$code}.svg"))
-        ? asset("images/flags/{$code}.svg")
-        : null;
-
-    $flag = $nationality->flag_url ?: $bundled;
+    // photoUrl() already falls back to the bundled flag named after the ISO
+    // code, so the lookup lives in one place.
+    $flag = $nationality->photoUrl();
 @endphp
 
-<a href="{{ route('candidates.index', ['nationality' => $nationality->slug]) }}" class="nationality-card">
+{{-- Points at the CV catalogue, which is what the count above measures. --}}
+<a href="{{ route('cvs.nationality', $nationality->public_key) }}" class="nationality-card">
     @if ($flag)
         <img src="{{ $flag }}" alt="علم {{ $nationality->name_ar }}"
              class="nationality-card__flag" loading="lazy">

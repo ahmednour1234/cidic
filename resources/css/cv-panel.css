@@ -856,26 +856,48 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: .35rem;
-    padding: 2.25rem 1rem;
+    gap: .5rem;
+    padding: 2.75rem 1rem;
     text-align: center;
-    border: 2px dashed var(--line);
+    border: 2px dashed #c3d4e6;
     border-radius: var(--r-md);
-    background: var(--brand-tint);
+    background:
+        linear-gradient(180deg, #fff 0%, var(--brand-tint) 100%);
     color: var(--muted);
     cursor: pointer;
-    transition: border-color .15s, background .15s, color .15s;
+    transition: border-color .15s, background .15s, color .15s, transform .15s;
 }
 
-.cvp-drop:hover,
+.cvp-drop:hover { border-color: var(--brand); }
+
 .cvp-drop.is-dragging {
     border-color: var(--brand);
     background: var(--brand-light);
     color: var(--brand);
+    transform: scale(1.01);
 }
 
-.cvp-drop-title { font-weight: 800; font-size: .92rem; color: var(--ink); }
+/* Circled arrow, so the target reads as a button rather than a bare icon. */
+.cvp-drop-icon {
+    width: 3.1rem;
+    height: 3.1rem;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: #fff;
+    color: var(--brand);
+    box-shadow: var(--shadow-md);
+}
+
+.cvp-drop-title { font-weight: 800; font-size: .95rem; color: var(--ink); }
 .cvp-drop-hint { font-size: .78rem; }
+
+.cvp-drop-or {
+    font-size: .72rem;
+    font-weight: 700;
+    color: var(--faint);
+    letter-spacing: .04em;
+}
 
 .cvp-files {
     list-style: none;

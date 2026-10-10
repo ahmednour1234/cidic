@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" class="notranslate" translate="no">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex, nofollow">
+    <meta name="google" content="notranslate">
     <title>تسجيل الدخول — {{ __('cv-panel.title') }}</title>
     @vite(['resources/css/app.css', 'resources/css/cv-panel.css', 'resources/js/app.js'])
 </head>

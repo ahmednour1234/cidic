@@ -83,13 +83,17 @@
                            @dragover.prevent="dragging = true"
                            @dragleave.prevent="dragging = false"
                            @drop.prevent="drop($event)">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-                             stroke-linecap="round" stroke-linejoin="round" width="34" height="34">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                            <path d="M17 8l-5-5-5 5"/><path d="M12 3v13"/>
-                        </svg>
+                        <span class="cvp-drop-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                                 stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <path d="M17 8l-5-5-5 5"/><path d="M12 3v13"/>
+                            </svg>
+                        </span>
 
-                        <span class="cvp-drop-title">اسحب الملفات هنا أو اضغط للاختيار</span>
+                        <span class="cvp-drop-title">اسحب ملفات الـ PDF هنا</span>
+                        <span class="cvp-drop-or">— أو —</span>
+                        <span class="cvp-btn cvp-btn-ghost">اختر من جهازك</span>
                         <span class="cvp-drop-hint">{{ __('cv-panel.upload.hint') }}</span>
 
                         <input type="file" id="cvs" name="cvs[]" class="d-none" accept="application/pdf"

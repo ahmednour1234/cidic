@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" class="notranslate" translate="no">
+<html lang="{{ app()->getLocale() }}" dir="{{ \App\Http\Middleware\SetCvPanelLocale::direction() }}" class="notranslate" translate="no">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex, nofollow">
     <meta name="google" content="notranslate">
-    <title>تسجيل الدخول — {{ __('cv-panel.title') }}</title>
+    <title>{{ __('cvp-auth.login.page_title') }} — {{ __('cv-panel.title') }}</title>
     @vite(['resources/css/app.css', 'resources/css/cv-panel.css', 'resources/js/app.js'])
 </head>
 <body>
@@ -39,16 +39,11 @@
         <div class="cvp-auth-copy">
             <h1 class="cvp-auth-title">{{ __('cv-panel.title') }}</h1>
             <p class="cvp-auth-sub">
-                إدارة السير الذاتية للعاملات المنزليات — من الرفع حتى إنشاء العقد،
-                في مكان واحد.
+                {{ __('cvp-auth.login.tagline') }}
             </p>
 
             <ul class="cvp-auth-points">
-                @foreach ([
-                    'رفع السير الذاتية وتنظيمها حسب الجنسية',
-                    'حجز السير للعملاء ومتابعتها حتى التعيين',
-                    'صفحات عامة لكل جنسية تشاركها مع عملائك',
-                ] as $point)
+                @foreach ((array) __('cvp-auth.login.points') as $point)
                     <li>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
                              stroke-linecap="round" stroke-linejoin="round">
@@ -66,7 +61,10 @@
     </aside>
 
     {{-- Form side --}}
-    <main class="cvp-auth-form">
+    <main class="cvp-auth-form" style="position:relative">
+        <div style="position:absolute;top:1rem;inset-inline-end:1rem;z-index:5;color:#003f74;background:#e6f0f9;border-radius:.6rem">
+            <x-cv-panel.locale-switcher />
+        </div>
         <div class="cvp-auth-box">
 
             <div class="cvp-auth-chip">
@@ -84,8 +82,8 @@
                 {{ __('cv-panel.title') }}
             </div>
 
-            <h2>تسجيل الدخول</h2>
-            <p class="lead-sm">أدخل بياناتك للوصول إلى لوحة السير الذاتية.</p>
+            <h2>{{ __('cvp-auth.login.heading') }}</h2>
+            <p class="lead-sm">{{ __('cvp-auth.login.lead') }}</p>
 
             @if ($errors->any())
                 <div class="alert alert-danger border-0 d-flex gap-2 align-items-start"
@@ -107,7 +105,7 @@
                 @csrf
 
                 <div class="mb-3">
-                    <label for="email" class="cvp-label">البريد الإلكتروني</label>
+                    <label for="email" class="cvp-label">{{ __('cvp-auth.login.email') }}</label>
                     <div class="cvp-field">
                         <svg class="cvp-field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                              stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -121,7 +119,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="password" class="cvp-label">كلمة المرور</label>
+                    <label for="password" class="cvp-label">{{ __('cvp-auth.login.password') }}</label>
                     <div class="cvp-field">
                         <svg class="cvp-field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                              stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -134,7 +132,7 @@
                                autocomplete="current-password" placeholder="••••••••">
 
                         <button type="button" class="cvp-field-action" @click="show = !show"
-                                :aria-label="show ? 'إخفاء كلمة المرور' : 'إظهار كلمة المرور'">
+                                :aria-label="show ? @js(__('cvp-auth.login.hide_password')) : @js(__('cvp-auth.login.show_password'))">
                             <svg x-show="! show" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
                                  width="17" height="17">
@@ -154,12 +152,12 @@
 
                 <div class="form-check mb-4">
                     <input type="checkbox" id="remember" name="remember" value="1" class="form-check-input">
-                    <label for="remember" class="form-check-label" style="font-size:.86rem">تذكّرني</label>
+                    <label for="remember" class="form-check-label" style="font-size:.86rem">{{ __('cvp-auth.login.remember') }}</label>
                 </div>
 
                 <button type="submit" class="cvp-btn cvp-btn-gold cvp-btn-lg" :disabled="sending">
                     <span x-show="sending" x-cloak class="spinner-border spinner-border-sm"></span>
-                    <span x-text="sending ? 'جارٍ الدخول…' : 'تسجيل الدخول'">تسجيل الدخول</span>
+                    <span x-text="sending ? @js(__('cvp-auth.login.submitting')) : @js(__('cvp-auth.login.submit'))">{{ __('cvp-auth.login.submit') }}</span>
                 </button>
             </form>
         </div>

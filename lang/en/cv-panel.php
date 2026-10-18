@@ -2,6 +2,7 @@
 
 // English mirror of lang/ar/cv-panel.php. Keys must stay in sync and unique.
 return [
+    'language' => 'Language',
     'title' => 'CV Panel',
 
     'nav' => [
@@ -59,8 +60,8 @@ return [
         'purged' => ':count old CVs were removed.',
         'hint' => 'Up to 100 files, each no larger than 10 MB.',
         'selected' => ':count files selected',
-        'purge_label' => 'Delete this nationality\'s old CVs (:count)',
-        'purge_note' => 'Reserved CVs, CVs with a client, and CVs with a contract are never deleted.',
+        'purge_label' => 'Delete my old CVs for this nationality (:count)',
+        'purge_note' => 'Only CVs you uploaded are deleted. Reserved CVs, CVs with a client, and CVs with a contract are never deleted.',
     ],
 
     'delete' => [

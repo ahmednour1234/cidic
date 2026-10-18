@@ -13,7 +13,7 @@
 @if (CvPanelPermissions::canDeleteWorker($me, $worker))
     <form method="POST" action="{{ route('cv-panel.cvs.destroy', $worker->id) }}"
           id="delete-{{ $worker->id }}" class="d-none"
-          onsubmit="return confirm('حذف هذه السيرة؟ ستختفي من اللوحة ومن الموقع، ويبقى سجلّها وملفها محفوظًا.')">
+          onsubmit="return confirm(@js(__('cvp-cvs.confirm_delete')))">
         @csrf
         @method('DELETE')
     </form>
@@ -22,7 +22,7 @@
 @if ($worker->canBeUnassignedBy($me))
     <form method="POST" action="{{ route('cv-panel.cvs.reserve.cancel', $worker->id) }}"
           id="cancel-{{ $worker->id }}" class="d-none"
-          onsubmit="return confirm('إلغاء حجز هذه السيرة؟ تبقى مسحوبة من الموقع العام.')">
+          onsubmit="return confirm(@js(__('cvp-cvs.confirm_cancel')))">
         @csrf
         @method('DELETE')
     </form>
@@ -31,7 +31,7 @@
 @if ($worker->canRecordTamaraBy($me))
     <form method="POST" action="{{ route('cv-panel.cvs.tamara', $worker->id) }}"
           id="tamara-{{ $worker->id }}" class="d-none"
-          onsubmit="return confirm('تسجيل تسديد عبر تمارا لهذه السيرة؟')">
+          onsubmit="return confirm(@js(__('cvp-cvs.confirm_tamara')))">
         @csrf
     </form>
 @endif
@@ -39,7 +39,7 @@
 @if ($worker->canCreateContractBy($me))
     <form method="POST" action="{{ route('cv-panel.cvs.contract', $worker->id) }}"
           id="contract-{{ $worker->id }}" class="d-none"
-          onsubmit="return confirm('{{ __('cv-panel.contract.confirm') }}')">
+          onsubmit="return confirm(@js(__('cv-panel.contract.confirm')))">
         @csrf
     </form>
 @endif

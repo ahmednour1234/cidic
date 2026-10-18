@@ -181,8 +181,8 @@ class PanelHttpTest extends CvPanelTestCase
         $nationality = $this->nationality();
         $coordinator = $this->coordinator([$nationality]);
 
-        $free = $this->worker(['nationality_id' => $nationality->id]);
-        $booked = $this->worker(['nationality_id' => $nationality->id]);
+        $free = $this->worker(['nationality_id' => $nationality->id, 'admin_id' => $coordinator->id]);
+        $booked = $this->worker(['nationality_id' => $nationality->id, 'admin_id' => $coordinator->id]);
         app(CvReservationService::class)->reserve($booked, $this->client(), $this->agent());
 
         $this->actingAs($coordinator)

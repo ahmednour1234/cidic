@@ -29,11 +29,11 @@ class CvPanelAccess
 
             return redirect()
                 ->route('cv-panel.login')
-                ->withErrors(['email' => 'حسابك غير مفعّل. يرجى التواصل مع المدير.']);
+                ->withErrors(['email' => __('cv-panel.login.inactive')]);
         }
 
         if (! $user->canAccessCvPanel()) {
-            abort(403, 'ليس لديك صلاحية الدخول إلى لوحة السير الذاتية.');
+            abort(403, __('cv-panel.login.denied'));
         }
 
         return $next($request);

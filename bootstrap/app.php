@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\CvPanelAccess;
 use App\Http\Middleware\EnsureUserIsAdmin;
+use App\Http\Middleware\SetCvPanelLocale;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -23,6 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin' => EnsureUserIsAdmin::class,
             'cv.panel' => CvPanelAccess::class,
+            'cv.locale' => SetCvPanelLocale::class,
         ]);
 
         // There is no public "login" route; unauthenticated users go to the

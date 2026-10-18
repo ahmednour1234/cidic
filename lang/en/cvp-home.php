@@ -1,0 +1,32 @@
+<?php
+
+// CV panel home + upload page strings. Keys must match across ar/en/fil/si.
+return [
+    'welcome' => 'Welcome, :name',
+    'sub_agent' => 'An overview of your reservations and available CVs.',
+    'sub_staff' => 'An overview of the CVs in your scope.',
+    'view_all' => 'View all',
+    'col_name' => 'Name',
+    'col_nationality' => 'Nationality',
+    'col_status' => 'Status',
+    'col_client' => 'Client',
+    'col_date' => 'Date',
+    'upload_sub' => 'The worker\'s name is taken from the file name, and duplicate files are skipped automatically.',
+    'batch_data' => 'Batch details',
+    'nationality_req' => 'Nationality *',
+    'choose_nationality' => 'Choose nationality',
+    'experience_req' => 'Experience *',
+    'religion_req' => 'Religion *',
+    'choose' => 'Choose',
+    'profession' => 'Profession',
+    'profession_placeholder' => 'Domestic worker',
+    'required_note' => 'Experience and religion are required because the public site filters by them.',
+    'files_title' => 'CV files (PDF) *',
+    'drop_title' => 'Drag PDF files here',
+    'drop_or' => '— or —',
+    'browse' => 'Choose from your device',
+    'clear_all' => 'Clear all',
+    'uploading' => 'Uploading…',
+    'upload_count' => 'Upload :count files',
+    'upload' => 'Upload',
+];

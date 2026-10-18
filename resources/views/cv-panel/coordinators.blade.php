@@ -8,7 +8,7 @@
         <div>
             <h1 class="cvp-page-title">{{ __('cv-panel.nav.coordinators') }}</h1>
             <p class="cvp-page-sub">
-                الجنسيات المرتبطة بالمنسّق تحدّد ما يراه ويرفع له ويحذفه.
+                {{ __('cvp-users.coordinators.subtitle') }}
             </p>
         </div>
     </div>
@@ -31,7 +31,7 @@
 
                     {{-- Hex inline: a hex inside class= renders colourless. --}}
                     <span class="cvp-badge" style="background:#e6f0f9;color:#0060a8">
-                        {{ count($assigned) }} جنسية
+                        {{ __('cvp-users.coordinators.count', ['count' => count($assigned)]) }}
                     </span>
                 </div>
 
@@ -58,7 +58,7 @@
                                     </span>
                                     <a href="{{ route('cvs.nationality', $nationality->public_key) }}"
                                        target="_blank" rel="noopener" class="cvp-pick-link"
-                                       title="الصفحة العامة" aria-label="الصفحة العامة">
+                                       title="{{ __('cvp-users.coordinators.public_page') }}" aria-label="{{ __('cvp-users.coordinators.public_page') }}">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                              stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                              width="13" height="13">
@@ -73,7 +73,7 @@
                 </div>
 
                 <div class="cvp-user-foot">
-                    <button type="submit" class="cvp-btn cvp-btn-navy">حفظ الجنسيات</button>
+                    <button type="submit" class="cvp-btn cvp-btn-navy">{{ __('cvp-users.coordinators.save') }}</button>
                 </div>
             </form>
         </div>
@@ -83,7 +83,7 @@
                  stroke-linecap="round" stroke-linejoin="round" width="40" height="40">
                 <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
             </svg>
-            <p class="mb-0" style="font-size:.9rem">لا يوجد منسّقون مفعّلون.</p>
+            <p class="mb-0" style="font-size:.9rem">{{ __('cvp-users.coordinators.empty') }}</p>
         </div>
     @endforelse
 

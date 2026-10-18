@@ -19,43 +19,43 @@
         <div>
             <h1 class="cvp-page-title">{{ __('cv-panel.nav.users') }}</h1>
             <p class="cvp-page-sub">
-                المستخدم يُوقف ولا يُحذف، ويرث فرع من أنشأه.
+                {{ __('cvp-users.users.subtitle') }}
             </p>
         </div>
 
         <span class="cvp-badge ms-auto" style="background:#e9eef4;color:#003f74">
-            {{ $users->count() }} مستخدم
+            {{ __('cvp-users.users.count', ['count' => $users->count()]) }}
         </span>
     </div>
 
     {{-- Add: four fields across one row on desktop, so the card uses its width. --}}
     <div class="cvp-card p-4 mb-4">
-        <h2 class="cvp-section-title mb-3">إضافة مستخدم</h2>
+        <h2 class="cvp-section-title mb-3">{{ __('cvp-users.users.add') }}</h2>
 
         <form method="POST" action="{{ route('cv-panel.users.store') }}" data-submit-guard>
             @csrf
 
             <div class="row g-3 align-items-start">
                 <div class="col-12 col-md-6 col-xl-3">
-                    <label class="cvp-label">الاسم</label>
+                    <label class="cvp-label">{{ __('cvp-users.users.name') }}</label>
                     <input type="text" name="name" value="{{ old('name') }}"
-                           class="cvp-input" placeholder="اسم المستخدم" required>
+                           class="cvp-input" placeholder="{{ __('cvp-users.users.name_placeholder') }}" required>
                 </div>
 
                 <div class="col-12 col-md-6 col-xl-3">
-                    <label class="cvp-label">البريد الإلكتروني</label>
+                    <label class="cvp-label">{{ __('cvp-users.users.email') }}</label>
                     <input type="email" name="email" value="{{ old('email') }}"
                            class="cvp-input cvp-ltr" dir="ltr" placeholder="name@example.com" required>
                 </div>
 
                 <div class="col-12 col-md-6 col-xl-3">
-                    <label class="cvp-label">كلمة المرور</label>
+                    <label class="cvp-label">{{ __('cvp-users.users.password') }}</label>
                     <input type="password" name="password" class="cvp-input cvp-ltr" dir="ltr"
-                           minlength="8" placeholder="٨ أحرف على الأقل" required>
+                           minlength="8" placeholder="{{ __('cvp-users.users.password_placeholder') }}" required>
                 </div>
 
                 <div class="col-12 col-md-6 col-xl-3">
-                    <label class="cvp-label">القسم</label>
+                    <label class="cvp-label">{{ __('cvp-users.users.department') }}</label>
                     <select name="department" class="form-select" required>
                         @foreach ($departments as $value => $label)
                             <option value="{{ $value }}" @selected(old('department') === $value)>
@@ -71,12 +71,12 @@
                      stroke-linecap="round" width="15" height="15">
                     <path d="M12 5v14M5 12h14"/>
                 </svg>
-                إضافة مستخدم
+                {{ __('cvp-users.users.add') }}
             </button>
         </form>
     </div>
 
-    <h2 class="cvp-section-title mb-3">المستخدمون الحاليون</h2>
+    <h2 class="cvp-section-title mb-3">{{ __('cvp-users.users.existing') }}</h2>
 
     {{-- Existing users: disabled, never deleted. --}}
     <div class="row g-3">
@@ -97,7 +97,7 @@
                                 {{ $user->name }}
                                 @if ($isMe)
                                     <span class="cvp-badge"
-                                          style="background:#e9eef4;color:#475569">أنت</span>
+                                          style="background:#e9eef4;color:#475569">{{ __('cvp-users.users.you') }}</span>
                                 @endif
                             </span>
                             <span class="cvp-user-mail cvp-ltr" dir="ltr">{{ $user->email }}</span>
@@ -111,7 +111,7 @@
                         <span class="cvp-badge"
                               style="background:{{ $user->is_active ? '#e8f6ef' : '#fef2f2' }};
                                      color:{{ $user->is_active ? '#1a9d63' : '#b91c1c' }}">
-                            {{ $user->is_active ? 'مفعّل' : 'موقوف' }}
+                            {{ $user->is_active ? __('cvp-users.users.active') : __('cvp-users.users.disabled') }}
                         </span>
                     </div>
 
@@ -122,22 +122,22 @@
 
                         <div class="row g-2">
                             <div class="col-12 col-sm-6">
-                                <label class="cvp-label">الاسم</label>
+                                <label class="cvp-label">{{ __('cvp-users.users.name') }}</label>
                                 <input type="text" name="name" value="{{ $user->name }}"
                                        class="cvp-input" required>
                             </div>
                             <div class="col-12 col-sm-6">
-                                <label class="cvp-label">البريد</label>
+                                <label class="cvp-label">{{ __('cvp-users.users.email_short') }}</label>
                                 <input type="email" name="email" value="{{ $user->email }}"
                                        class="cvp-input cvp-ltr" dir="ltr" required>
                             </div>
                             <div class="col-12 col-sm-6">
-                                <label class="cvp-label">كلمة مرور جديدة</label>
+                                <label class="cvp-label">{{ __('cvp-users.users.new_password') }}</label>
                                 <input type="password" name="password" class="cvp-input cvp-ltr"
-                                       dir="ltr" minlength="8" placeholder="اتركها فارغة لعدم التغيير">
+                                       dir="ltr" minlength="8" placeholder="{{ __('cvp-users.users.new_password_placeholder') }}">
                             </div>
                             <div class="col-12 col-sm-6">
-                                <label class="cvp-label">القسم</label>
+                                <label class="cvp-label">{{ __('cvp-users.users.department') }}</label>
                                 <select name="department" class="form-select" required>
                                     @foreach ($departments as $value => $label)
                                         <option value="{{ $value }}" @selected($user->department === $value)>
@@ -153,21 +153,21 @@
                         {{-- Outside the edit form: nesting forms is invalid HTML
                              and the inner one would never submit. --}}
                         <button type="submit" form="user-save-{{ $user->id }}"
-                                class="cvp-btn cvp-btn-navy">حفظ التعديلات</button>
+                                class="cvp-btn cvp-btn-navy">{{ __('cvp-users.users.save') }}</button>
 
                         @unless ($isMe)
                             <form method="POST" action="{{ route('cv-panel.users.toggle', $user) }}"
                                   class="ms-auto m-0"
-                                  onsubmit="return confirm('{{ $user->is_active ? 'إيقاف هذا المستخدم؟ لن يتمكن من الدخول.' : 'تفعيل هذا المستخدم؟' }}')">
+                                  onsubmit="return confirm(@js($user->is_active ? __('cvp-users.users.confirm_disable') : __('cvp-users.users.confirm_enable')))">
                                 @csrf
                                 <button type="submit"
                                         class="cvp-btn {{ $user->is_active ? 'cvp-btn-danger' : 'cvp-btn-success' }}">
-                                    {{ $user->is_active ? 'إيقاف' : 'تفعيل' }}
+                                    {{ $user->is_active ? __('cvp-users.users.disable') : __('cvp-users.users.enable') }}
                                 </button>
                             </form>
                         @else
                             <span class="ms-auto small" style="color:#9aa7b4">
-                                لا يمكنك إيقاف حسابك
+                                {{ __('cvp-users.users.cannot_disable_self') }}
                             </span>
                         @endunless
                     </div>
@@ -181,7 +181,7 @@
                         <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
                         <circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
                     </svg>
-                    <p class="mb-0" style="font-size:.9rem">لا يوجد مستخدمون بعد.</p>
+                    <p class="mb-0" style="font-size:.9rem">{{ __('cvp-users.users.empty') }}</p>
                 </div>
             </div>
         @endforelse

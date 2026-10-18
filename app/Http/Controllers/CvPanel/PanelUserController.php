@@ -35,7 +35,10 @@ class PanelUserController extends Controller implements HasMiddleware
                 ->whereNotNull('department')
                 ->orderBy('name')
                 ->get(),
-            'departments' => Department::options(),
+            // Localised here; Department::label() stays Arabic.
+            'departments' => collect(Department::values())
+                ->mapWithKeys(fn (string $v) => [$v => __('cvp-users.departments.'.$v)])
+                ->all(),
         ]);
     }
 
@@ -58,7 +61,7 @@ class PanelUserController extends Controller implements HasMiddleware
             'is_active' => true,
         ]);
 
-        return back()->with('success', 'تم إنشاء المستخدم.');
+        return back()->with('success', __('cvp-users.flash.created'));
     }
 
     public function update(Request $request, User $user): RedirectResponse
@@ -88,19 +91,19 @@ class PanelUserController extends Controller implements HasMiddleware
             $user->nationalities()->detach();
         }
 
-        return back()->with('success', 'تم تحديث المستخدم.');
+        return back()->with('success', __('cvp-users.flash.updated'));
     }
 
     /** Users are disabled, never deleted. */
     public function toggle(Request $request, User $user): RedirectResponse
     {
         if ($user->id === $request->user()->id) {
-            return back()->with('error', 'لا يمكنك إيقاف حسابك الخاص.');
+            return back()->with('error', __('cvp-users.flash.cannot_disable_self'));
         }
 
         $user->update(['is_active' => ! $user->is_active]);
 
-        return back()->with('success', $user->is_active ? 'تم تفعيل المستخدم.' : 'تم إيقاف المستخدم.');
+        return back()->with('success', $user->is_active ? __('cvp-users.flash.enabled') : __('cvp-users.flash.disabled'));
     }
 
     public function coordinators(): View
@@ -125,6 +128,6 @@ class PanelUserController extends Controller implements HasMiddleware
 
         $user->nationalities()->sync($data['nationality_ids'] ?? []);
 
-        return back()->with('success', 'تم تحديث جنسيات المنسّق.');
+        return back()->with('success', __('cvp-users.flash.nationalities_updated'));
     }
 }

@@ -16,13 +16,13 @@
 
         @if (CvPanelPermissions::canReserve($me))
             <a href="{{ route('cv-panel.cvs.reserve', $worker->id) }}" class="cvp-btn cvp-btn-gold">
-                حجز للعميل
+                {{ __('cvp-cvs.reserve_for_client') }}
             </a>
         @endif
 
         @if (CvPanelPermissions::canDeleteWorker($me, $worker))
             <button type="submit" form="delete-{{ $worker->id }}" class="cvp-btn cvp-btn-danger">
-                حذف
+                {{ __('cvp-cvs.delete') }}
             </button>
         @endif
 
@@ -40,13 +40,13 @@
             </span>
         @elseif ($worker->canRecordTamaraBy($me))
             <button type="submit" form="tamara-{{ $worker->id }}" class="cvp-btn cvp-btn-ghost">
-                سدّد تمارا
+                {{ __('cvp-cvs.record_tamara') }}
             </button>
         @endif
 
         @if ($worker->canBeUnassignedBy($me))
             <button type="submit" form="cancel-{{ $worker->id }}" class="cvp-btn cvp-btn-danger">
-                إلغاء الحجز
+                {{ __('cvp-cvs.cancel_reservation') }}
             </button>
         @endif
 

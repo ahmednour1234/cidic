@@ -1,12 +1,12 @@
 @extends('cv-panel.layout')
 
-@section('title', 'حجز سيرة ذاتية')
+@section('title', __('cvp-cvs.reserve_title'))
 
 @section('content')
 
     <div class="d-flex flex-wrap align-items-center gap-2 mb-4">
         <div>
-            <h1 class="cvp-page-title">حجز سيرة ذاتية</h1>
+            <h1 class="cvp-page-title">{{ __('cvp-cvs.reserve_title') }}</h1>
             <p class="cvp-page-sub">{{ __('cv-panel.reserve.intro') }}</p>
         </div>
     </div>
@@ -20,27 +20,27 @@
                     <span class="cvp-user-avatar">{{ mb_substr($worker->name ?? '?', 0, 1) }}</span>
                     <span class="flex-grow-1 min-w-0">
                         <span class="cvp-user-name">{{ $worker->name ?? '—' }}</span>
-                        <span class="cvp-user-mail">السيرة رقم {{ $worker->id }}</span>
+                        <span class="cvp-user-mail">{{ __('cvp-cvs.cv_number', ['id' => $worker->id]) }}</span>
                     </span>
                 </div>
 
                 <div class="cvp-user-body">
                     <dl class="cvp-facts mb-3">
                         <div>
-                            <dt>الجنسية</dt>
+                            <dt>{{ __('cvp-cvs.col_nationality') }}</dt>
                             <dd><x-cv-panel.nationality :nationality="$worker->nationality" /></dd>
                         </div>
                         <div>
-                            <dt>الخبرة</dt>
+                            <dt>{{ __('cvp-cvs.col_experience') }}</dt>
                             <dd>{{ __('workers.experience.'.$worker->experience) }}</dd>
                         </div>
                         <div>
-                            <dt>الديانة</dt>
+                            <dt>{{ __('cvp-cvs.col_religion') }}</dt>
                             <dd>{{ __('workers.religion.'.$worker->religion) }}</dd>
                         </div>
                         @if ($worker->profession)
                             <div>
-                                <dt>المهنة</dt>
+                                <dt>{{ __('cvp-cvs.profession') }}</dt>
                                 <dd>{{ $worker->profession }}</dd>
                             </div>
                         @endif
@@ -53,7 +53,7 @@
                             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                             <path d="M14 2v6h6"/>
                         </svg>
-                        عرض ملف السيرة
+                        {{ __('cvp-cvs.view_cv_file') }}
                     </a>
                 </div>
             </div>
@@ -66,15 +66,15 @@
                   class="cvp-card p-4 h-100 d-flex flex-column" data-submit-guard>
                 @csrf
 
-                <h2 class="cvp-section-title mb-3">العميل</h2>
+                <h2 class="cvp-section-title mb-3">{{ __('cvp-cvs.client') }}</h2>
 
                 {{-- Registered client --}}
                 <label for="mode-existing" class="cvp-choice" :class="mode === 'existing' && 'is-on'">
                     <input type="radio" id="mode-existing" class="form-check-input m-0"
                            value="existing" x-model="mode">
                     <span>
-                        <span class="d-block fw-bold">عميل مسجّل</span>
-                        <span class="d-block small" style="color:#6f7b88">ابحث بالاسم من قاعدة العملاء</span>
+                        <span class="d-block fw-bold">{{ __('cvp-cvs.existing_client') }}</span>
+                        <span class="d-block small" style="color:#6f7b88">{{ __('cvp-cvs.existing_client_hint') }}</span>
                     </span>
                 </label>
 
@@ -86,7 +86,7 @@
                                 <circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>
                             </svg>
                             <input type="text" class="cvp-input" autocomplete="off"
-                                   placeholder="اكتب اسم العميل للبحث…"
+                                   placeholder="{{ __('cvp-cvs.client_search_placeholder') }}"
                                    x-model="term" @input.debounce.300ms="search()">
                         </div>
 
@@ -113,20 +113,20 @@
                 <label for="mode-new" class="cvp-choice mt-2" :class="mode === 'new' && 'is-on'">
                     <input type="radio" id="mode-new" class="form-check-input m-0" value="new" x-model="mode">
                     <span>
-                        <span class="d-block fw-bold">عميل جديد</span>
-                        <span class="d-block small" style="color:#6f7b88">اسم ورقم جوال فقط — بدون جواز</span>
+                        <span class="d-block fw-bold">{{ __('cvp-cvs.new_client') }}</span>
+                        <span class="d-block small" style="color:#6f7b88">{{ __('cvp-cvs.new_client_hint') }}</span>
                     </span>
                 </label>
 
                 <div class="cvp-choice-body" x-show="mode === 'new'" x-cloak>
                     <div class="row g-2">
                         <div class="col-12 col-sm-6">
-                            <label class="cvp-label">اسم العميل</label>
+                            <label class="cvp-label">{{ __('cvp-cvs.client_name') }}</label>
                             <input type="text" name="client_name" value="{{ old('client_name') }}"
-                                   class="cvp-input" placeholder="الاسم الكامل">
+                                   class="cvp-input" placeholder="{{ __('cvp-cvs.full_name') }}">
                         </div>
                         <div class="col-12 col-sm-6">
-                            <label class="cvp-label">رقم الجوال</label>
+                            <label class="cvp-label">{{ __('cvp-cvs.mobile') }}</label>
                             <input type="tel" name="client_phone" value="{{ old('client_phone') }}"
                                    class="cvp-input cvp-ltr" dir="ltr" placeholder="05xxxxxxxx">
                         </div>
@@ -138,12 +138,12 @@
                          stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
                         <circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>
                     </svg>
-                    <span>الحجز لا ينتهي تلقائيًا — يبقى حتى يفكّه موظّف يدويًا.</span>
+                    <span>{{ __('cvp-cvs.no_expiry_note') }}</span>
                 </div>
 
                 <div class="d-flex gap-2 mt-auto pt-3">
-                    <button type="submit" class="cvp-btn cvp-btn-gold">تأكيد الحجز</button>
-                    <a href="{{ route('cv-panel.cvs.index') }}" class="cvp-btn cvp-btn-ghost">رجوع</a>
+                    <button type="submit" class="cvp-btn cvp-btn-gold">{{ __('cvp-cvs.confirm_reserve') }}</button>
+                    <a href="{{ route('cv-panel.cvs.index') }}" class="cvp-btn cvp-btn-ghost">{{ __('cvp-cvs.back') }}</a>
                 </div>
             </form>
         </div>

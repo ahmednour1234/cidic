@@ -1,0 +1,32 @@
+<?php
+
+// CV panel home + upload page strings. Keys must match across ar/en/fil/si.
+return [
+    'welcome' => 'ආයුබෝවන්, :name',
+    'sub_agent' => 'ඔබගේ වෙන්කිරීම් සහ ලබා ගත හැකි CV පිළිබඳ දළ විශ්ලේෂණයක්.',
+    'sub_staff' => 'ඔබගේ විෂය පථයේ ඇති CV පිළිබඳ දළ විශ්ලේෂණයක්.',
+    'view_all' => 'සියල්ල බලන්න',
+    'col_name' => 'නම',
+    'col_nationality' => 'ජාතිකත්වය',
+    'col_status' => 'තත්ත්වය',
+    'col_client' => 'සේවාදායකයා',
+    'col_date' => 'දිනය',
+    'upload_sub' => 'සේවිකාවගේ නම ගොනුවේ නමින් ගනු ලබන අතර, අනුපිටපත් ගොනු ස්වයංක්‍රීයව මඟ හරිනු ලැබේ.',
+    'batch_data' => 'කාණ්ඩයේ විස්තර',
+    'nationality_req' => 'ජාතිකත්වය *',
+    'choose_nationality' => 'ජාතිකත්වය තෝරන්න',
+    'experience_req' => 'පළපුරුද්ද *',
+    'religion_req' => 'ආගම *',
+    'choose' => 'තෝරන්න',
+    'profession' => 'වෘත්තිය',
+    'profession_placeholder' => 'ගෘහ සේවිකාව',
+    'required_note' => 'පොදු වෙබ් අඩවිය ඒවා අනුව පෙරහන් කරන බැවින් පළපුරුද්ද සහ ආගම අනිවාර්ය වේ.',
+    'files_title' => 'CV ගොනු (PDF) *',
+    'drop_title' => 'PDF ගොනු මෙතැනට ඇද දමන්න',
+    'drop_or' => '— හෝ —',
+    'browse' => 'ඔබගේ උපාංගයෙන් තෝරන්න',
+    'clear_all' => 'සියල්ල ඉවත් කරන්න',
+    'uploading' => 'උඩුගත කරමින්…',
+    'upload_count' => 'ගොනු :count ක් උඩුගත කරන්න',
+    'upload' => 'උඩුගත කරන්න',
+];

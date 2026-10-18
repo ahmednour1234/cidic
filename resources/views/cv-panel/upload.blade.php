@@ -8,7 +8,7 @@
         <div>
             <h1 class="cvp-page-title">{{ __('cv-panel.nav.upload') }}</h1>
             <p class="cvp-page-sub">
-                اسم العاملة يؤخذ من اسم الملف، والملف المكرّر يُتخطّى تلقائيًا.
+                {{ __('cvp-home.upload_sub') }}
             </p>
         </div>
     </div>
@@ -24,13 +24,13 @@
             {{-- Attributes shared by the whole batch --}}
             <div class="col-12 col-lg-5">
                 <div class="cvp-card p-4 h-100">
-                    <h2 class="cvp-section-title mb-3">بيانات الدفعة</h2>
+                    <h2 class="cvp-section-title mb-3">{{ __('cvp-home.batch_data') }}</h2>
 
                     <div class="mb-3">
-                        <label for="nationality_id" class="cvp-label">الجنسية *</label>
+                        <label for="nationality_id" class="cvp-label">{{ __('cvp-home.nationality_req') }}</label>
                         <select id="nationality_id" name="nationality_id" class="form-select" required
                                 onchange="window.location = '{{ route('cv-panel.upload') }}?nationality_id=' + this.value">
-                            <option value="">اختر الجنسية</option>
+                            <option value="">{{ __('cvp-home.choose_nationality') }}</option>
                             @foreach ($nationalities as $nationality)
                                 <option value="{{ $nationality->id }}"
                                     @selected($selectedNationalityId == $nationality->id)>
@@ -42,9 +42,9 @@
 
                     <div class="row g-2 mb-3">
                         <div class="col-12 col-sm-6">
-                            <label for="experience" class="cvp-label">الخبرة *</label>
+                            <label for="experience" class="cvp-label">{{ __('cvp-home.experience_req') }}</label>
                             <select id="experience" name="experience" class="form-select" required>
-                                <option value="">اختر</option>
+                                <option value="">{{ __('cvp-home.choose') }}</option>
                                 @foreach (__('workers.experience') as $key => $label)
                                     <option value="{{ $key }}" @selected(old('experience') === $key)>{{ $label }}</option>
                                 @endforeach
@@ -52,9 +52,9 @@
                         </div>
 
                         <div class="col-12 col-sm-6">
-                            <label for="religion" class="cvp-label">الديانة *</label>
+                            <label for="religion" class="cvp-label">{{ __('cvp-home.religion_req') }}</label>
                             <select id="religion" name="religion" class="form-select" required>
-                                <option value="">اختر</option>
+                                <option value="">{{ __('cvp-home.choose') }}</option>
                                 @foreach (__('workers.religion') as $key => $label)
                                     <option value="{{ $key }}" @selected(old('religion') === $key)>{{ $label }}</option>
                                 @endforeach
@@ -63,13 +63,13 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="profession" class="cvp-label">المهنة</label>
+                        <label for="profession" class="cvp-label">{{ __('cvp-home.profession') }}</label>
                         <input type="text" id="profession" name="profession" value="{{ old('profession') }}"
-                               class="cvp-input" placeholder="عاملة منزلية">
+                               class="cvp-input" placeholder="{{ __('cvp-home.profession_placeholder') }}">
                     </div>
 
                     <p class="small mb-0" style="color:#6f7b88">
-                        الخبرة والديانة إلزاميتان لأن الموقع العام يفلتر بهما.
+                        {{ __('cvp-home.required_note') }}
                     </p>
                 </div>
             </div>
@@ -77,7 +77,7 @@
             {{-- Files --}}
             <div class="col-12 col-lg-7">
                 <div class="cvp-card p-4 h-100 d-flex flex-column">
-                    <h2 class="cvp-section-title mb-3">ملفات السير الذاتية (PDF) *</h2>
+                    <h2 class="cvp-section-title mb-3">{{ __('cvp-home.files_title') }}</h2>
 
                     <label for="cvs" class="cvp-drop" :class="dragging && 'is-dragging'"
                            @dragover.prevent="dragging = true"
@@ -91,9 +91,9 @@
                             </svg>
                         </span>
 
-                        <span class="cvp-drop-title">اسحب ملفات الـ PDF هنا</span>
-                        <span class="cvp-drop-or">— أو —</span>
-                        <span class="cvp-btn cvp-btn-ghost">اختر من جهازك</span>
+                        <span class="cvp-drop-title">{{ __('cvp-home.drop_title') }}</span>
+                        <span class="cvp-drop-or">{{ __('cvp-home.drop_or') }}</span>
+                        <span class="cvp-btn cvp-btn-ghost">{{ __('cvp-home.browse') }}</span>
                         <span class="cvp-drop-hint">{{ __('cv-panel.upload.hint') }}</span>
 
                         <input type="file" id="cvs" name="cvs[]" class="d-none" accept="application/pdf"
@@ -106,7 +106,7 @@
                             <span class="cvp-label mb-0"
                                   x-text="@js(__('cv-panel.upload.selected', ['count' => ':n'])).replace(':n', files.length)"></span>
                             <button type="button" class="cvp-btn cvp-btn-ghost ms-auto"
-                                    style="padding:.25rem .6rem" @click="clear()">مسح الكل</button>
+                                    style="padding:.25rem .6rem" @click="clear()">{{ __('cvp-home.clear_all') }}</button>
                         </div>
 
                         <ul class="cvp-files">
@@ -144,8 +144,8 @@
                                 :disabled="sending || files.length === 0">
                             <span x-show="sending" x-cloak class="spinner-border spinner-border-sm"></span>
                             <span x-text="sending
-                                ? 'جارٍ الرفع…'
-                                : (files.length ? 'رفع ' + files.length + ' ملف' : 'رفع')">رفع</span>
+                                ? @js(__('cvp-home.uploading'))
+                                : (files.length ? @js(__('cvp-home.upload_count', ['count' => ':n'])).replace(':n', files.length) : @js(__('cvp-home.upload')))">{{ __('cvp-home.upload') }}</span>
                         </button>
                     </div>
                 </div>

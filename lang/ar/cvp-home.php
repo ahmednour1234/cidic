@@ -1,0 +1,32 @@
+<?php
+
+// CV panel home + upload page strings. Keys must match across ar/en/fil/si.
+return [
+    'welcome' => 'مرحبًا، :name',
+    'sub_agent' => 'نظرة على حجوزاتك والسير المتاحة.',
+    'sub_staff' => 'نظرة عامة على السير الذاتية في نطاقك.',
+    'view_all' => 'عرض الكل',
+    'col_name' => 'الاسم',
+    'col_nationality' => 'الجنسية',
+    'col_status' => 'الحالة',
+    'col_client' => 'العميل',
+    'col_date' => 'التاريخ',
+    'upload_sub' => 'اسم العاملة يؤخذ من اسم الملف، والملف المكرّر يُتخطّى تلقائيًا.',
+    'batch_data' => 'بيانات الدفعة',
+    'nationality_req' => 'الجنسية *',
+    'choose_nationality' => 'اختر الجنسية',
+    'experience_req' => 'الخبرة *',
+    'religion_req' => 'الديانة *',
+    'choose' => 'اختر',
+    'profession' => 'المهنة',
+    'profession_placeholder' => 'عاملة منزلية',
+    'required_note' => 'الخبرة والديانة إلزاميتان لأن الموقع العام يفلتر بهما.',
+    'files_title' => 'ملفات السير الذاتية (PDF) *',
+    'drop_title' => 'اسحب ملفات الـ PDF هنا',
+    'drop_or' => '— أو —',
+    'browse' => 'اختر من جهازك',
+    'clear_all' => 'مسح الكل',
+    'uploading' => 'جارٍ الرفع…',
+    'upload_count' => 'رفع :count ملف',
+    'upload' => 'رفع',
+];

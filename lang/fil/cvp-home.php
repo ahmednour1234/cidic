@@ -1,0 +1,32 @@
+<?php
+
+// CV panel home + upload page strings. Keys must match across ar/en/fil/si.
+return [
+    'welcome' => 'Kumusta, :name',
+    'sub_agent' => 'Pangkalahatang-tanaw ng iyong mga reserbasyon at mga available na CV.',
+    'sub_staff' => 'Pangkalahatang-tanaw ng mga CV na saklaw mo.',
+    'view_all' => 'Tingnan lahat',
+    'col_name' => 'Pangalan',
+    'col_nationality' => 'Nasyonalidad',
+    'col_status' => 'Katayuan',
+    'col_client' => 'Kliyente',
+    'col_date' => 'Petsa',
+    'upload_sub' => 'Kinukuha ang pangalan ng manggagawa mula sa pangalan ng file, at awtomatikong nilalaktawan ang mga dobleng file.',
+    'batch_data' => 'Mga detalye ng batch',
+    'nationality_req' => 'Nasyonalidad *',
+    'choose_nationality' => 'Pumili ng nasyonalidad',
+    'experience_req' => 'Karanasan *',
+    'religion_req' => 'Relihiyon *',
+    'choose' => 'Pumili',
+    'profession' => 'Propesyon',
+    'profession_placeholder' => 'Kasambahay',
+    'required_note' => 'Kailangan ang karanasan at relihiyon dahil ginagamit ito ng pampublikong site sa pag-filter.',
+    'files_title' => 'Mga file ng CV (PDF) *',
+    'drop_title' => 'I-drag ang mga PDF file dito',
+    'drop_or' => '— o —',
+    'browse' => 'Pumili mula sa iyong device',
+    'clear_all' => 'I-clear lahat',
+    'uploading' => 'Ina-upload…',
+    'upload_count' => 'I-upload ang :count file',
+    'upload' => 'I-upload',
+];

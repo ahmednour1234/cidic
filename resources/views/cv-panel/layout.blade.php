@@ -9,7 +9,7 @@
 {{-- class="notranslate" is what Chrome actually honours; the meta alone is
      not enough to stop the in-page translator. --}}
 <html lang="{{ app()->getLocale() }}"
-      dir="{{ in_array(app()->getLocale(), ['ar']) ? 'rtl' : 'ltr' }}"
+      dir="{{ \App\Http\Middleware\SetCvPanelLocale::direction() }}"
       class="notranslate" translate="no">
 <head>
     <meta charset="utf-8">
@@ -112,6 +112,8 @@
                         </a>
                     </div>
                 </div>
+
+                <x-cv-panel.locale-switcher />
 
                 <form method="POST" action="{{ route('cv-panel.logout') }}" class="m-0">
                     @csrf

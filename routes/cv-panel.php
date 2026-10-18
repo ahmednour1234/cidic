@@ -3,6 +3,7 @@
 use App\Http\Controllers\CvPanel\CvController;
 use App\Http\Controllers\CvPanel\CvPanelLoginController;
 use App\Http\Controllers\CvPanel\DashboardController;
+use App\Http\Controllers\CvPanel\LocaleController;
 use App\Http\Controllers\CvPanel\NotificationController;
 use App\Http\Controllers\CvPanel\PanelUserController;
 use App\Http\Controllers\CvPanel\ReservationController;
@@ -17,7 +18,12 @@ use Illuminate\Support\Facades\Route;
 | governed solely by CvPanelAccess.
 */
 
-Route::prefix('cv-panel')->name('cv-panel.')->group(function () {
+Route::prefix('cv-panel')->name('cv-panel.')->middleware('cv.locale')->group(function () {
+
+    /* Language switcher — open to guests so the login screen can use it. */
+    Route::post('locale/{locale}', [LocaleController::class, 'update'])
+        ->whereIn('locale', array_keys(App\Http\Middleware\SetCvPanelLocale::LOCALES))
+        ->name('locale');
 
     Route::middleware('guest')->group(function () {
         Route::get('login', [CvPanelLoginController::class, 'create'])->name('login');

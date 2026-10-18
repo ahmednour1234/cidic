@@ -27,7 +27,7 @@
                 <input type="hidden" name="tab" value="{{ $tab }}">
                 <select name="nationality_id" class="form-select form-select-sm"
                         onchange="this.form.submit()">
-                    <option value="">كل جنسياتي</option>
+                    <option value="">{{ __('cvp-cvs.all_my_nationalities') }}</option>
                     @foreach ($nationalities as $nationality)
                         <option value="{{ $nationality->id }}"
                             @selected(request('nationality_id') == $nationality->id)>
@@ -51,28 +51,28 @@
 
                     <dl class="small mb-3">
                         <div class="d-flex gap-2">
-                            <dt class="text-muted fw-normal">العميل:</dt>
+                            <dt class="text-muted fw-normal">{{ __('cvp-cvs.client_label') }}</dt>
                             <dd class="mb-0 fw-bold">{{ $worker->client?->name ?? '—' }}</dd>
                         </div>
                         <div class="d-flex gap-2">
-                            <dt class="text-muted fw-normal">الحاجز:</dt>
+                            <dt class="text-muted fw-normal">{{ __('cvp-cvs.reserved_by_label') }}</dt>
                             <dd class="mb-0">{{ $worker->assignedBy?->name ?? '—' }}</dd>
                         </div>
                         <div class="d-flex gap-2">
-                            <dt class="text-muted fw-normal">التاريخ:</dt>
+                            <dt class="text-muted fw-normal">{{ __('cvp-cvs.date_label') }}</dt>
                             <dd class="mb-0">{{ $worker->assigned_at?->format('Y-m-d H:i') ?? '—' }}</dd>
                         </div>
                     </dl>
 
                     <div class="d-flex gap-2 mt-auto">
                         <a href="{{ route('cv-panel.cvs.file', $worker->id) }}" target="_blank"
-                           rel="noopener" class="cvp-btn cvp-btn-ghost">عرض الملف</a>
+                           rel="noopener" class="cvp-btn cvp-btn-ghost">{{ __('cvp-cvs.view_file') }}</a>
 
                         @if ($tab === 'reserved')
                             <form method="POST" action="{{ route('cv-panel.cvs.assigned', $worker->id) }}"
-                                  onsubmit="return confirm('تأكيد تعيين هذه العاملة؟ لا يمكن التراجع من اللوحة.')">
+                                  onsubmit="return confirm(@js(__('cvp-cvs.confirm_assigned')))">
                                 @csrf
-                                <button type="submit" class="cvp-btn cvp-btn-success">تم التعيين</button>
+                                <button type="submit" class="cvp-btn cvp-btn-success">{{ __('cvp-cvs.mark_assigned') }}</button>
                             </form>
                         @endif
                     </div>

@@ -114,7 +114,8 @@ class UploadAndPurgeTest extends CvPanelTestCase
         $nationality = $this->nationality();
         $coordinator = $this->coordinator([$nationality]);
 
-        $old = $this->worker(['nationality_id' => $nationality->id]);
+        $old = $this->worker(['nationality_id' => $nationality->id, 'admin_id' => $coordinator->id]);
+        $colleagues = $this->worker(['nationality_id' => $nationality->id, 'admin_id' => $this->coordinator([$nationality])->id]);
 
         $result = $this->uploads->handle(
             files: [$this->pdf('جديدة.pdf')],
@@ -130,7 +131,9 @@ class UploadAndPurgeTest extends CvPanelTestCase
         $this->assertSame(1, $result['purged']);
         $this->assertSoftDeleted('workers', ['id' => $old->id]);
         // The freshly uploaded CV survives the purge that ran before it.
-        $this->assertSame(1, Worker::whereNull('deleted_at')->count());
+        // A colleague's CV is left alone: coordinators only purge their own.
+        $this->assertSame(2, Worker::whereNull('deleted_at')->count());
+        $this->assertNotSoftDeleted('workers', ['id' => $colleagues->id]);
     }
 
     public function test_soft_deleted_rows_keep_their_file(): void

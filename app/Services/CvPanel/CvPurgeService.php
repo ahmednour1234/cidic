@@ -17,28 +17,30 @@ use Illuminate\Support\Facades\DB;
  */
 final class CvPurgeService
 {
-    public function candidates(int $nationalityId): Builder
+    /** $uploaderId limits the set to one uploader's CVs (coordinators). */
+    public function candidates(int $nationalityId, ?int $uploaderId = null): Builder
     {
         return Worker::query()
             ->where('nationality_id', $nationalityId)
+            ->when($uploaderId !== null, fn ($q) => $q->where('admin_id', $uploaderId))
             ->whereNotNull('cv_path')
             ->where('status', Worker::STATUS_AVAILABLE)
             ->whereNull('client_id')
             ->whereDoesntHave('recruitmentContracts');
     }
 
-    public function countFor(?int $nationalityId): int
+    public function countFor(?int $nationalityId, ?int $uploaderId = null): int
     {
-        return $nationalityId === null ? 0 : $this->candidates($nationalityId)->count();
+        return $nationalityId === null ? 0 : $this->candidates($nationalityId, $uploaderId)->count();
     }
 
     /** @return int the number of CVs soft-deleted. */
-    public function purge(int $nationalityId, ?User $actor = null): int
+    public function purge(int $nationalityId, ?User $actor = null, ?int $uploaderId = null): int
     {
-        return DB::transaction(function () use ($nationalityId, $actor) {
+        return DB::transaction(function () use ($nationalityId, $actor, $uploaderId) {
             // Re-queried inside the transaction so anything reserved since the
             // upload page was rendered drops out of the set.
-            $workers = $this->candidates($nationalityId)->lockForUpdate()->get();
+            $workers = $this->candidates($nationalityId, $uploaderId)->lockForUpdate()->get();
 
             foreach ($workers as $worker) {
                 $worker->delete();

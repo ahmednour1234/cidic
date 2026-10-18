@@ -6,6 +6,7 @@ use App\Models\Nationality;
 use App\Models\User;
 use App\Models\Worker;
 use App\Models\WorkerActivityLog;
+use App\Support\CvPanel\CvPanelPermissions;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -35,7 +36,7 @@ final class CvUploadService
     ): array {
         // The purge runs first, so a re-upload of the same batch is not
         // immediately removed by it.
-        $purged = $purgeOld ? $this->purge->purge($nationalityId, $actor) : 0;
+        $purged = $purgeOld ? $this->purge->purge($nationalityId, $actor, CvPanelPermissions::purgeOwnerId($actor)) : 0;
 
         $nationality = Nationality::find($nationalityId);
         $created = 0;

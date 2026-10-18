@@ -35,9 +35,9 @@
 
     <div class="d-flex flex-wrap align-items-center gap-2 mb-4">
         <div>
-            <h1 class="cvp-page-title">مرحبًا، {{ auth()->user()->name }}</h1>
+            <h1 class="cvp-page-title">{{ __('cvp-home.welcome', ['name' => auth()->user()->name]) }}</h1>
             <p class="cvp-page-sub">
-                {{ $isAgent ? 'نظرة على حجوزاتك والسير المتاحة.' : 'نظرة عامة على السير الذاتية في نطاقك.' }}
+                {{ $isAgent ? __('cvp-home.sub_agent') : __('cvp-home.sub_staff') }}
             </p>
         </div>
 
@@ -185,7 +185,7 @@
             {{ $isAgent ? __('cv-panel.dashboard.recent_reservations') : __('cv-panel.dashboard.recent_uploads') }}
         </h2>
         <a href="{{ route('cv-panel.cvs.index') }}" class="ms-auto text-decoration-none fw-bold"
-           style="color:#0060a8;font-size:.8rem">عرض الكل ←</a>
+           style="color:#0060a8;font-size:.8rem">{{ __('cvp-home.view_all') }} ←</a>
     </div>
 
     <div class="cvp-card overflow-hidden">
@@ -204,11 +204,11 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>الاسم</th>
-                            <th>الجنسية</th>
-                            <th>الحالة</th>
-                            <th>العميل</th>
-                            <th>التاريخ</th>
+                            <th>{{ __('cvp-home.col_name') }}</th>
+                            <th>{{ __('cvp-home.col_nationality') }}</th>
+                            <th>{{ __('cvp-home.col_status') }}</th>
+                            <th>{{ __('cvp-home.col_client') }}</th>
+                            <th>{{ __('cvp-home.col_date') }}</th>
                         </tr>
                     </thead>
                     <tbody>

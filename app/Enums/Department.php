@@ -15,11 +15,7 @@ enum Department: string
 
     public function label(): string
     {
-        return match ($this) {
-            self::Coordination => 'التنسيق',
-            self::CustomerService => 'خدمة العملاء',
-            self::BranchManager => 'مدير فرع',
-        };
+        return __('cvp-users.departments.'.$this->value);
     }
 
     /** @return list<string> */
@@ -28,7 +24,7 @@ enum Department: string
         return array_column(self::cases(), 'value');
     }
 
-    /** @return array<string, string> value => Arabic label, for select inputs. */
+    /** @return array<string, string> value => localized label, for select inputs. */
     public static function options(): array
     {
         $options = [];

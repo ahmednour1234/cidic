@@ -81,13 +81,26 @@ class PermissionMatrixTest extends CvPanelTestCase
         $nationality = $this->nationality();
         $coordinator = $this->coordinator([$nationality]);
 
-        $free = $this->worker(['nationality_id' => $nationality->id]);
+        $free = $this->worker(['nationality_id' => $nationality->id, 'admin_id' => $coordinator->id]);
         $this->assertTrue(CvPanelPermissions::canDeleteWorker($coordinator, $free));
 
-        $reserved = $this->worker(['nationality_id' => $nationality->id]);
+        $reserved = $this->worker(['nationality_id' => $nationality->id, 'admin_id' => $coordinator->id]);
         app(CvReservationService::class)->reserve($reserved, $this->client(), $this->agent());
 
         $this->assertFalse(CvPanelPermissions::canDeleteWorker($coordinator, $reserved->fresh()));
+    }
+
+    public function test_a_coordinator_can_only_delete_cvs_they_uploaded(): void
+    {
+        $nationality = $this->nationality();
+        $coordinator = $this->coordinator([$nationality]);
+        $colleague = $this->coordinator([$nationality]);
+
+        $mine = $this->worker(['nationality_id' => $nationality->id, 'admin_id' => $coordinator->id]);
+        $theirs = $this->worker(['nationality_id' => $nationality->id, 'admin_id' => $colleague->id]);
+
+        $this->assertTrue(CvPanelPermissions::canDeleteWorker($coordinator, $mine));
+        $this->assertFalse(CvPanelPermissions::canDeleteWorker($coordinator, $theirs));
     }
 
     public function test_a_coordinator_cannot_delete_outside_their_nationalities(): void

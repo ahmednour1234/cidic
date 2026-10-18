@@ -119,14 +119,14 @@
                                 </th>
                             @endif
                             <th>#</th>
-                            <th>الاسم</th>
-                            <th>الجنسية</th>
-                            <th>الخبرة</th>
-                            <th>الديانة</th>
-                            <th>الحالة</th>
-                            <th>العميل</th>
-                            <th>تاريخ الرفع</th>
-                            <th>السيرة</th>
+                            <th>{{ __('cvp-cvs.col_name') }}</th>
+                            <th>{{ __('cvp-cvs.col_nationality') }}</th>
+                            <th>{{ __('cvp-cvs.col_experience') }}</th>
+                            <th>{{ __('cvp-cvs.col_religion') }}</th>
+                            <th>{{ __('cvp-cvs.col_status') }}</th>
+                            <th>{{ __('cvp-cvs.col_client') }}</th>
+                            <th>{{ __('cvp-cvs.col_uploaded_at') }}</th>
+                            <th>{{ __('cvp-cvs.col_cv') }}</th>
                             <th></th>
                         </tr>
                     </thead>

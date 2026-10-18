@@ -93,11 +93,12 @@ class CvController extends Controller
         WorkerActivityLogger::log(
             $worker,
             WorkerActivityLog::ACTION_DELETED,
-            'حُذفت السيرة الذاتية من لوحة السير الذاتية (حذف ناعم)',
+            // Activity log text is stored, so it is always written in Arabic.
+            __('cvp-cvs.log_deleted', [], 'ar'),
             $request->user(),
         );
 
-        return back()->with('success', 'تم حذف السيرة الذاتية.');
+        return back()->with('success', __('cvp-cvs.deleted'));
     }
 
     public function bulkDestroy(Request $request): RedirectResponse
@@ -131,7 +132,7 @@ class CvController extends Controller
             WorkerActivityLogger::log(
                 $worker,
                 WorkerActivityLog::ACTION_DELETED,
-                'حُذفت ضمن حذف جماعي من لوحة السير الذاتية (حذف ناعم)',
+                __('cvp-cvs.log_bulk_deleted', [], 'ar'),
                 $user,
             );
         }
@@ -241,7 +242,7 @@ class CvController extends Controller
         if ($result['duplicates'] !== []) {
             $message .= ' '.__('cv-panel.upload.duplicates', [
                 'count' => count($result['duplicates']),
-                'names' => implode('، ', array_slice($result['duplicates'], 0, 5)),
+                'names' => implode(__('cvp-cvs.list_separator'), array_slice($result['duplicates'], 0, 5)),
             ]);
         }
 

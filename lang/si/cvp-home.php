@@ -29,4 +29,6 @@ return [
     'uploading' => 'උඩුගත කරමින්…',
     'upload_count' => 'ගොනු :count ක් උඩුගත කරන්න',
     'upload' => 'උඩුගත කරන්න',
+    'age' => 'වයස',
+    'age_placeholder' => 'උදා: 28',
 ];

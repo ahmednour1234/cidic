@@ -57,6 +57,24 @@ class UploadAndPurgeTest extends CvPanelTestCase
         Storage::disk('cv_private')->assertExists($worker->cv_path);
     }
 
+    public function test_upload_stores_the_batch_age(): void
+    {
+        $nationality = $this->nationality();
+        $coordinator = $this->coordinator([$nationality]);
+
+        $this->uploads->handle(
+            files: [$this->pdf('ماريا.pdf')],
+            nationalityId: $nationality->id,
+            experience: 'none',
+            religion: 'christian',
+            profession: null,
+            actor: $coordinator,
+            age: 29,
+        );
+
+        $this->assertSame(29, Worker::first()->age);
+    }
+
     public function test_a_duplicate_file_name_is_skipped(): void
     {
         $nationality = $this->nationality();

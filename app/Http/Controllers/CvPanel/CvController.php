@@ -222,6 +222,7 @@ class CvController extends Controller
             'experience' => ['required', Rule::in(array_keys(__('workers.experience')))],
             'religion' => ['required', Rule::in(array_keys(__('workers.religion')))],
             'profession' => ['nullable', 'string', 'max:255'],
+            'age' => ['nullable', 'integer', 'between:18,65'],
             'cvs' => ['required', 'array', 'min:1', 'max:100'],
             'cvs.*' => ['file', 'mimes:pdf', 'max:10240'],
             'purge_old' => ['boolean'],
@@ -233,6 +234,7 @@ class CvController extends Controller
             experience: $data['experience'],
             religion: $data['religion'],
             profession: $data['profession'] ?? null,
+            age: isset($data['age']) ? (int) $data['age'] : null,
             actor: $user,
             purgeOld: $request->boolean('purge_old'),
         );

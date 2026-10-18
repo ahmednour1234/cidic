@@ -33,6 +33,7 @@ final class CvUploadService
         ?string $profession,
         User $actor,
         bool $purgeOld = false,
+        ?int $age = null,
     ): array {
         // The purge runs first, so a re-upload of the same batch is not
         // immediately removed by it.
@@ -64,6 +65,7 @@ final class CvUploadService
                     'experience' => $experience,
                     'religion' => $religion,
                     'profession' => $profession,
+                    'age' => $age,
                     'gender' => 'female',
                     'cv_path' => $path,
                     'cv_disk' => self::DISK,

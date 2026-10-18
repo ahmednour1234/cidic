@@ -62,10 +62,18 @@
                         </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="profession" class="cvp-label">{{ __('cvp-home.profession') }}</label>
-                        <input type="text" id="profession" name="profession" value="{{ old('profession') }}"
-                               class="cvp-input" placeholder="{{ __('cvp-home.profession_placeholder') }}">
+                    <div class="row g-3 mb-3">
+                        <div class="col-sm-8">
+                            <label for="profession" class="cvp-label">{{ __('cvp-home.profession') }}</label>
+                            <input type="text" id="profession" name="profession" value="{{ old('profession') }}"
+                                   class="cvp-input" placeholder="{{ __('cvp-home.profession_placeholder') }}">
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="age" class="cvp-label">{{ __('cvp-home.age') }}</label>
+                            <input type="number" id="age" name="age" value="{{ old('age') }}"
+                                   min="18" max="65" step="1" inputmode="numeric"
+                                   class="cvp-input" placeholder="{{ __('cvp-home.age_placeholder') }}">
+                        </div>
                     </div>
 
                     <p class="small mb-0" style="color:#6f7b88">

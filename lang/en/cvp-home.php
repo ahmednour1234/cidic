@@ -29,4 +29,6 @@ return [
     'uploading' => 'Uploading…',
     'upload_count' => 'Upload :count files',
     'upload' => 'Upload',
+    'age' => 'Age',
+    'age_placeholder' => 'e.g. 28',
 ];

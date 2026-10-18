@@ -29,4 +29,6 @@ return [
     'uploading' => 'Ina-upload…',
     'upload_count' => 'I-upload ang :count file',
     'upload' => 'I-upload',
+    'age' => 'Edad',
+    'age_placeholder' => 'hal. 28',
 ];

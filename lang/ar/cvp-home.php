@@ -29,4 +29,6 @@ return [
     'uploading' => 'جارٍ الرفع…',
     'upload_count' => 'رفع :count ملف',
     'upload' => 'رفع',
+    'age' => 'العمر',
+    'age_placeholder' => 'مثال: 28',
 ];

@@ -90,7 +90,7 @@ class PermissionMatrixTest extends CvPanelTestCase
         $this->assertFalse(CvPanelPermissions::canDeleteWorker($coordinator, $reserved->fresh()));
     }
 
-    public function test_a_coordinator_can_only_delete_cvs_they_uploaded(): void
+    public function test_a_coordinator_can_delete_colleagues_cvs_in_their_nationality(): void
     {
         $nationality = $this->nationality();
         $coordinator = $this->coordinator([$nationality]);
@@ -100,7 +100,7 @@ class PermissionMatrixTest extends CvPanelTestCase
         $theirs = $this->worker(['nationality_id' => $nationality->id, 'admin_id' => $colleague->id]);
 
         $this->assertTrue(CvPanelPermissions::canDeleteWorker($coordinator, $mine));
-        $this->assertFalse(CvPanelPermissions::canDeleteWorker($coordinator, $theirs));
+        $this->assertTrue(CvPanelPermissions::canDeleteWorker($coordinator, $theirs));
     }
 
     public function test_a_coordinator_cannot_delete_outside_their_nationalities(): void

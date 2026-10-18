@@ -21,7 +21,11 @@
         @endif
 
         @if (CvPanelPermissions::canDeleteWorker($me, $worker))
-            <button type="submit" form="delete-{{ $worker->id }}" class="cvp-btn cvp-btn-danger">
+            <button type="submit" form="delete-{{ $worker->id }}" class="cvp-btn cvp-btn-danger d-inline-flex align-items-center gap-1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                     stroke-linecap="round" stroke-linejoin="round" width="14" height="14">
+                    <path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/>
+                </svg>
                 {{ __('cvp-cvs.delete') }}
             </button>
         @endif

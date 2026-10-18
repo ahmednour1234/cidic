@@ -62,20 +62,13 @@ final class CvPanelPermissions
     {
         return self::canDelete($user)
             && $user->managesNationality($worker->nationality_id)
-            && self::ownsUpload($user, $worker)
             && self::workerIsDeletable($worker);
     }
 
     /**
-     * Coordinators may only delete CVs they uploaded themselves; a super
-     * admin may delete any.
+     * Uploader id that the "delete my old CVs" purge is limited to, or null
+     * for no limit. Single deletes are not restricted this way.
      */
-    public static function ownsUpload(User $user, Worker $worker): bool
-    {
-        return $user->isSuperAdmin() || (int) $worker->admin_id === (int) $user->id;
-    }
-
-    /** Uploader id that purges are limited to, or null for no limit. */
     public static function purgeOwnerId(?User $user): ?int
     {
         return $user === null || $user->isSuperAdmin() ? null : (int) $user->id;

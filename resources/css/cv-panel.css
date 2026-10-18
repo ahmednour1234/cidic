@@ -1256,18 +1256,35 @@ a.cv-chip.is-active:hover { background: var(--brand-dark); color: #fff; }
 
 [x-cloak] { display: none !important; }
 
+/* Header action cluster: even spacing, with a hairline between the
+   identity block and the buttons. */
+.cvp-actions { display: flex; align-items: center; gap: .6rem; }
+.cvp-actions .cvp-whoami { padding-inline-end: 1rem; margin-inline-end: .4rem;
+    border-inline-end: 1px solid rgb(255 255 255 / .15); }
+.cvp-actions .cvp-iconbtn { width: 2.4rem; height: 2.4rem; border-radius: .75rem;
+    border: 1px solid rgb(255 255 255 / .12); }
+.cvp-actions .cvp-iconbtn:focus-visible { outline: 2px solid rgb(255 255 255 / .55); outline-offset: 2px; }
+
 /* Language switcher */
 .cvp-lang { position: relative; }
-.cvp-lang-btn { width: auto; padding-inline: .55rem; gap: .3rem; display: inline-flex; align-items: center; }
-.cvp-lang-code { font-size: .72rem; font-weight: 700; }
+.cvp-actions .cvp-lang-btn, .cvp-lang-btn {
+    width: auto; display: inline-flex; align-items: center; gap: .4rem;
+    padding-inline: .7rem .55rem; border-radius: 999px;
+}
+.cvp-lang-code { font-size: .74rem; font-weight: 700; letter-spacing: .04em; line-height: 1; }
+.cvp-lang-chev { opacity: .7; transition: transform .15s; }
+.cvp-lang-btn[aria-expanded="true"] .cvp-lang-chev { transform: rotate(180deg); }
 .cvp-lang-menu {
-    position: absolute; inset-inline-end: 0; top: calc(100% + .4rem); z-index: 1050;
-    min-width: 10rem; padding: .3rem; background: #fff; border: 1px solid #e2e8f0;
-    border-radius: .75rem; box-shadow: 0 10px 30px rgba(15, 23, 42, .12);
+    position: absolute; inset-inline-end: 0; top: calc(100% + .5rem); z-index: 1050;
+    min-width: 11.5rem; padding: .35rem; background: #fff; border: 1px solid #e2e8f0;
+    border-radius: .9rem; box-shadow: 0 16px 40px rgba(15, 23, 42, .16);
 }
 .cvp-lang-option {
-    display: block; width: 100%; padding: .45rem .7rem; border: 0; background: none;
-    border-radius: .5rem; text-align: start; font-size: .85rem; color: #0f172a;
+    display: flex; align-items: center; justify-content: space-between; gap: .75rem;
+    width: 100%; padding: .55rem .75rem; border: 0; background: none;
+    border-radius: .6rem; font-size: .88rem; color: #0f172a; cursor: pointer;
 }
 .cvp-lang-option:hover { background: #f1f5f9; }
+.cvp-lang-option small { font-size: .68rem; font-weight: 700; color: #94a3b8; letter-spacing: .05em; }
 .cvp-lang-option.is-active { background: #e6f0f9; color: #003f74; font-weight: 700; }
+.cvp-lang-option.is-active small { color: #0060a8; }

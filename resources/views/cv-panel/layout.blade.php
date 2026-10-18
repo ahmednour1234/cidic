@@ -47,7 +47,7 @@
                 {{ __('cv-panel.title') }}
             </a>
 
-            <div class="ms-auto d-flex align-items-center gap-2 gap-md-3">
+            <div class="ms-auto cvp-actions">
 
                 <span class="cvp-whoami d-none d-md-flex">
                     <span class="cvp-avatar">{{ mb_substr($me->name, 0, 1) }}</span>

@@ -178,6 +178,27 @@ class CvController extends Controller
         ]);
     }
 
+    /** Put a withdrawn but free CV back on the public site. */
+    public function restore(Request $request, int $id): RedirectResponse
+    {
+        $worker = $this->findInScope($request, $id);
+
+        if (! CvPanelPermissions::canRestoreWorker($request->user(), $worker)) {
+            return back()->with('error', __('cvp-cvs.restore_not_allowed'));
+        }
+
+        $worker->forceFill(['cv_withdrawn_at' => null])->save();
+
+        WorkerActivityLogger::log(
+            $worker,
+            WorkerActivityLog::ACTION_UPDATED,
+            __('cvp-cvs.log_restored', [], 'ar'),
+            $request->user(),
+        );
+
+        return back()->with('success', __('cvp-cvs.restored'));
+    }
+
     public function markAssigned(Request $request, int $id): RedirectResponse
     {
         abort_unless(CvPanelPermissions::canFollowUpReserved($request->user()), 403);

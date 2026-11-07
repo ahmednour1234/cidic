@@ -193,6 +193,34 @@ class PanelHttpTest extends CvPanelTestCase
         $this->assertNotSoftDeleted('workers', ['id' => $booked->id]);
     }
 
+    public function test_a_coordinator_can_return_a_withdrawn_cv_to_the_site(): void
+    {
+        $nationality = $this->nationality();
+        $coordinator = $this->coordinator([$nationality]);
+        $worker = $this->worker(['nationality_id' => $nationality->id]);
+        $worker->forceFill(['cv_withdrawn_at' => now()])->save();
+
+        $this->actingAs($coordinator)
+            ->post(route('cv-panel.cvs.restore', $worker->id))
+            ->assertSessionHas('success');
+
+        $this->assertNull($worker->fresh()->cv_withdrawn_at);
+    }
+
+    public function test_a_reserved_cv_cannot_be_returned_to_the_site(): void
+    {
+        $nationality = $this->nationality();
+        $coordinator = $this->coordinator([$nationality]);
+        $worker = $this->worker(['nationality_id' => $nationality->id]);
+        app(CvReservationService::class)->reserve($worker, $this->client(), $this->agent());
+
+        $this->actingAs($coordinator)
+            ->post(route('cv-panel.cvs.restore', $worker->id))
+            ->assertSessionHas('error');
+
+        $this->assertNotNull($worker->fresh()->cv_withdrawn_at);
+    }
+
     public function test_an_agent_cannot_delete(): void
     {
         $worker = $this->worker();

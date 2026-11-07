@@ -19,6 +19,14 @@
     </form>
 @endif
 
+@if (CvPanelPermissions::canRestoreWorker($me, $worker))
+    <form method="POST" action="{{ route('cv-panel.cvs.restore', $worker->id) }}"
+          id="restore-{{ $worker->id }}" class="d-none"
+          onsubmit="return confirm(@js(__('cvp-cvs.confirm_restore')))">
+        @csrf
+    </form>
+@endif
+
 @if ($worker->canBeUnassignedBy($me))
     <form method="POST" action="{{ route('cv-panel.cvs.reserve.cancel', $worker->id) }}"
           id="cancel-{{ $worker->id }}" class="d-none"

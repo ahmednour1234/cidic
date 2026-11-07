@@ -20,6 +20,12 @@
             </a>
         @endif
 
+        @if (CvPanelPermissions::canRestoreWorker($me, $worker))
+            <button type="submit" form="restore-{{ $worker->id }}" class="cvp-btn cvp-btn-success">
+                {{ __('cvp-cvs.restore') }}
+            </button>
+        @endif
+
         @if (CvPanelPermissions::canDeleteWorker($me, $worker))
             <button type="submit" form="delete-{{ $worker->id }}" class="cvp-btn cvp-btn-danger d-inline-flex align-items-center gap-1">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"

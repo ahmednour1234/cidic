@@ -44,4 +44,9 @@ return [
     'log_deleted' => 'CV deleted from the CV panel (soft delete)',
     'log_bulk_deleted' => 'Deleted in a bulk delete from the CV panel (soft delete)',
     'list_separator' => ', ',
+    'restore' => 'Back to website',
+    'confirm_restore' => 'Return this CV to the public website? Clients will see it again.',
+    'restored' => 'The CV is back on the website.',
+    'restore_not_allowed' => 'This CV cannot be returned to the website.',
+    'log_restored' => 'CV returned to the public site manually from the CV panel',
 ];

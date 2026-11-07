@@ -47,6 +47,7 @@ Route::prefix('cv-panel')->name('cv-panel.')->middleware('cv.locale')->group(fun
         Route::get('cvs/{id}/file', [CvController::class, 'file'])->name('cvs.file');
         Route::delete('cvs/{id}', [CvController::class, 'destroy'])->name('cvs.destroy');
         Route::delete('cvs', [CvController::class, 'bulkDestroy'])->name('cvs.bulk-destroy');
+        Route::post('cvs/{id}/restore', [CvController::class, 'restore'])->name('cvs.restore');
         Route::post('cvs/{id}/assigned', [CvController::class, 'markAssigned'])->name('cvs.assigned');
 
         /* Upload */

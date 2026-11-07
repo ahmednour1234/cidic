@@ -44,4 +44,9 @@ return [
     'log_deleted' => 'Binura ang CV mula sa CV panel (soft delete)',
     'log_bulk_deleted' => 'Binura sa maramihang pagbura mula sa CV panel (soft delete)',
     'list_separator' => ', ',
+    'restore' => 'Ibalik sa website',
+    'confirm_restore' => 'Ibalik ang CV na ito sa pampublikong website? Makikita ulit ito ng mga kliyente.',
+    'restored' => 'Naibalik na ang CV sa website.',
+    'restore_not_allowed' => 'Hindi maibabalik ang CV na ito sa website.',
+    'log_restored' => 'CV returned to the public site manually from the CV panel',
 ];

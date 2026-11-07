@@ -74,6 +74,19 @@ final class CvPanelPermissions
         return $user === null || $user->isSuperAdmin() ? null : (int) $user->id;
     }
 
+    /**
+     * Putting a withdrawn CV back on the public site: coordinators, within
+     * their nationalities, and only once the CV is free again (available,
+     * no client, no contract).
+     */
+    public static function canRestoreWorker(?User $user, Worker $worker): bool
+    {
+        return self::canDelete($user)
+            && $user->managesNationality($worker->nationality_id)
+            && $worker->isWithdrawn()
+            && self::workerIsDeletable($worker);
+    }
+
     public static function canUploadToNationality(?User $user, int|string|null $nationalityId): bool
     {
         return self::canUpload($user) && $user->managesNationality($nationalityId);

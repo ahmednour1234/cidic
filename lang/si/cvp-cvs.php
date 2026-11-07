@@ -44,4 +44,9 @@ return [
     'log_deleted' => 'CV පැනලයෙන් CV එක මකා දමන ලදී (මෘදු මකාදැමීම)',
     'log_bulk_deleted' => 'CV පැනලයෙන් තොග මකාදැමීමක දී මකා දමන ලදී (මෘදු මකාදැමීම)',
     'list_separator' => ', ',
+    'restore' => 'වෙබ් අඩවියට නැවත',
+    'confirm_restore' => 'මෙම CV පොදු වෙබ් අඩවියට නැවත එක් කරන්නද? සේවාදායකයින්ට එය නැවත පෙනෙනු ඇත.',
+    'restored' => 'CV නැවත වෙබ් අඩවියේ ඇත.',
+    'restore_not_allowed' => 'මෙම CV වෙබ් අඩවියට නැවත එක් කළ නොහැක.',
+    'log_restored' => 'CV returned to the public site manually from the CV panel',
 ];

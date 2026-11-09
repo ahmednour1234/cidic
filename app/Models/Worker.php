@@ -209,7 +209,21 @@ class Worker extends Model
             return false;
         }
 
-        return $this->canActOnReservationBy($admin);
+        return $this->canActOnReservationBy($admin) || $this->canBeReleasedByCoordinator($admin);
+    }
+
+    /**
+     * Coordinators may release any reservation within their own nationalities,
+     * whoever made it, so a stuck CV can go back on the public site.
+     */
+    public function canBeReleasedByCoordinator(?User $admin): bool
+    {
+        return $admin !== null
+            && $admin->is_active
+            && $this->status === self::STATUS_RESERVED
+            && ! $this->hasActiveContract()
+            && $admin->isCoordination()
+            && $admin->managesNationality($this->nationality_id);
     }
 
     public function canRecordTamaraBy(?User $admin): bool

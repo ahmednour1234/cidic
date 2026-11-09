@@ -49,4 +49,7 @@ return [
     'restored' => 'CV නැවත වෙබ් අඩවියේ ඇත.',
     'restore_not_allowed' => 'මෙම CV වෙබ් අඩවියට නැවත එක් කළ නොහැක.',
     'log_restored' => 'CV returned to the public site manually from the CV panel',
+    'release_restore' => 'වෙන්කිරීම ඉවත් කර වෙබ් අඩවියට',
+    'confirm_release_restore' => 'මෙම වෙන්කිරීම ඉවත් කර CV පොදු වෙබ් අඩවියට නැවත එක් කරන්නද? එය සේවාදායකයාගෙන් වෙන් වී නැවත පෙනෙනු ඇත.',
+    'released_restored' => 'වෙන්කිරීම ඉවත් කර CV නැවත වෙබ් අඩවියට එක් කරන ලදී.',
 ];

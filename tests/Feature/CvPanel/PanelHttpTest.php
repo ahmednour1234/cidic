@@ -221,6 +221,36 @@ class PanelHttpTest extends CvPanelTestCase
         $this->assertNotNull($worker->fresh()->cv_withdrawn_at);
     }
 
+    public function test_a_coordinator_can_release_a_reservation_and_return_it_to_the_site(): void
+    {
+        $nationality = $this->nationality();
+        $coordinator = $this->coordinator([$nationality]);
+        $worker = $this->worker(['nationality_id' => $nationality->id]);
+        app(CvReservationService::class)->reserve($worker, $this->client(), $this->agent());
+
+        $this->actingAs($coordinator)
+            ->delete(route('cv-panel.cvs.reserve.cancel', $worker->id), ['restore' => 1])
+            ->assertSessionHas('success');
+
+        $worker->refresh();
+        $this->assertSame(Worker::STATUS_AVAILABLE, $worker->status);
+        $this->assertNull($worker->client_id);
+        $this->assertNull($worker->cv_withdrawn_at);
+    }
+
+    public function test_a_coordinator_cannot_release_outside_their_nationalities(): void
+    {
+        $nationality = $this->nationality();
+        $coordinator = $this->coordinator([$this->nationality('kenya', 'ke')]);
+        $worker = $this->worker(['nationality_id' => $nationality->id]);
+        app(CvReservationService::class)->reserve($worker, $this->client(), $this->agent());
+
+        $this->actingAs($coordinator)
+            ->delete(route('cv-panel.cvs.reserve.cancel', $worker->id), ['restore' => 1]);
+
+        $this->assertSame(Worker::STATUS_RESERVED, $worker->fresh()->status);
+    }
+
     public function test_an_agent_cannot_delete(): void
     {
         $worker = $this->worker();

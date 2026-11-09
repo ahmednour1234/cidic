@@ -49,4 +49,7 @@ return [
     'restored' => 'Naibalik na ang CV sa website.',
     'restore_not_allowed' => 'Hindi maibabalik ang CV na ito sa website.',
     'log_restored' => 'CV returned to the public site manually from the CV panel',
+    'release_restore' => 'I-release at ibalik sa website',
+    'confirm_release_restore' => 'I-release ang reservation na ito at ibalik ang CV sa pampublikong website? Aalisin ito sa kliyente at makikita ulit ng mga kliyente.',
+    'released_restored' => 'Na-release ang reservation at naibalik na ang CV sa website.',
 ];

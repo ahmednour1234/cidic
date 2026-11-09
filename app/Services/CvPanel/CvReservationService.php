@@ -66,7 +66,7 @@ final class CvReservationService
 
         if (! $worker->canBeUnassignedBy($actor)) {
             throw new RuntimeException(
-                'فقط الموظف الذي أجرى الحجز أو المدير العام يمكنه إلغاء هذا الحجز.'
+                'فقط الموظف الذي أجرى الحجز أو منسق الجنسية أو المدير العام يمكنه إلغاء هذا الحجز.'
             );
         }
 

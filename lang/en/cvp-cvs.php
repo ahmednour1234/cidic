@@ -49,4 +49,7 @@ return [
     'restored' => 'The CV is back on the website.',
     'restore_not_allowed' => 'This CV cannot be returned to the website.',
     'log_restored' => 'CV returned to the public site manually from the CV panel',
+    'release_restore' => 'Release & back to website',
+    'confirm_release_restore' => 'Release this reservation and return the CV to the public website? It is unlinked from the client and clients will see it again.',
+    'released_restored' => 'The reservation was released and the CV is back on the website.',
 ];

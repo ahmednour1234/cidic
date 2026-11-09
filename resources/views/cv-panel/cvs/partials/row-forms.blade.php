@@ -36,6 +36,16 @@
     </form>
 @endif
 
+@if ($worker->canBeReleasedByCoordinator($me))
+    <form method="POST" action="{{ route('cv-panel.cvs.reserve.cancel', $worker->id) }}"
+          id="release-{{ $worker->id }}" class="d-none"
+          onsubmit="return confirm(@js(__('cvp-cvs.confirm_release_restore')))">
+        @csrf
+        @method('DELETE')
+        <input type="hidden" name="restore" value="1">
+    </form>
+@endif
+
 @if ($worker->canRecordTamaraBy($me))
     <form method="POST" action="{{ route('cv-panel.cvs.tamara', $worker->id) }}"
           id="tamara-{{ $worker->id }}" class="d-none"

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\CvPanel;
 use App\Http\Controllers\Controller;
 use App\Models\Client;
 use App\Models\Worker;
+use App\Models\WorkerActivityLog;
+use App\Services\CvPanel\WorkerActivityLogger;
 use App\Services\CvPanel\ContractService;
 use App\Services\CvPanel\CvReservationService;
 use App\Support\CvPanel\CvPanelPermissions;
@@ -66,6 +68,21 @@ class ReservationController extends Controller
             $this->reservations->cancel($worker, $request->user());
         } catch (RuntimeException $e) {
             return back()->with('error', $e->getMessage());
+        }
+
+        // "Release and return to site": the coordinator's one-click variant.
+        if ($request->boolean('restore')
+            && CvPanelPermissions::canRestoreWorker($request->user(), $worker->refresh())) {
+            $worker->forceFill(['cv_withdrawn_at' => null])->save();
+
+            WorkerActivityLogger::log(
+                $worker,
+                WorkerActivityLog::ACTION_UPDATED,
+                __('cvp-cvs.log_restored', [], 'ar'),
+                $request->user(),
+            );
+
+            return back()->with('success', __('cvp-cvs.released_restored'));
         }
 
         return back()->with('success', __('cv-panel.cancel.success'));

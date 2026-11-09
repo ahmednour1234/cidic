@@ -54,7 +54,11 @@
             </button>
         @endif
 
-        @if ($worker->canBeUnassignedBy($me))
+        @if ($worker->canBeReleasedByCoordinator($me))
+            <button type="submit" form="release-{{ $worker->id }}" class="cvp-btn cvp-btn-success">
+                {{ __('cvp-cvs.release_restore') }}
+            </button>
+        @elseif ($worker->canBeUnassignedBy($me))
             <button type="submit" form="cancel-{{ $worker->id }}" class="cvp-btn cvp-btn-danger">
                 {{ __('cvp-cvs.cancel_reservation') }}
             </button>

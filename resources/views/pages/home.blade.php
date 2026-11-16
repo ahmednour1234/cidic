@@ -353,6 +353,27 @@
             </div>
         </section>
     @endif
+
+{{-- Home offer popup --}}
+<div id="homeOfferPopup" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.65);align-items:center;justify-content:center;padding:16px;">
+    <div style="position:relative;max-width:420px;width:100%;">
+        <button type="button" id="homeOfferPopupClose" aria-label="إغلاق"
+            style="position:absolute;top:-14px;left:-14px;width:36px;height:36px;border-radius:50%;border:none;background:#fff;color:#000;font-size:22px;line-height:36px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.3);">&times;</button>
+        <img src="{{ asset('images/home-offer-popup.jpeg') }}" alt="عروض مميزة على خدمات الاستقدام"
+            style="width:100%;max-height:85vh;object-fit:contain;border-radius:12px;display:block;">
+    </div>
+</div>
+<script>
+    (function () {
+        var popup = document.getElementById('homeOfferPopup');
+        if (!popup) return;
+        function close() { popup.style.display = 'none'; }
+        window.addEventListener('load', function () { popup.style.display = 'flex'; });
+        document.getElementById('homeOfferPopupClose').addEventListener('click', close);
+        popup.addEventListener('click', function (e) { if (e.target === popup) close(); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    })();
+</script>
 @endsection
 
 @push('scripts')

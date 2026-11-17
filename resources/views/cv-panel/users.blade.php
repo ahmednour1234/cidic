@@ -9,6 +9,7 @@
     $deptStyle = [
         Department::Coordination->value   => ['#e6f0f9', '#0060a8'],
         Department::CustomerService->value => ['#e8f6ef', '#1a9d63'],
+        Department::CoordinationCustomerService->value => ['#efe9fb', '#6b46c1'],
         Department::BranchManager->value  => ['#fdf3e3', '#d38b1a'],
     ];
 @endphp

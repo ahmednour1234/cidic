@@ -38,6 +38,7 @@ return [
     'departments' => [
         'coordination' => 'සම්බන්ධීකරණය',
         'customer_service' => 'පාරිභෝගික සේවා',
+        'coordination_customer_service' => 'සම්බන්ධීකරණය සහ පාරිභෝගික සේවා',
         'branch_manager' => 'ශාඛා කළමනාකරු',
     ],
 

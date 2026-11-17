@@ -40,9 +40,10 @@ class ExportCvPanelStaff extends Command
             // handover sheet; --all brings them back for debugging.
             ->unless($this->option('all'), fn ($q) => $q->where('email', 'not like', '%@example.com'))
             ->orderByRaw("CASE department
-                WHEN ? THEN 1 WHEN ? THEN 2 WHEN ? THEN 3 ELSE 4 END", [
+                WHEN ? THEN 1 WHEN ? THEN 2 WHEN ? THEN 3 WHEN ? THEN 4 ELSE 5 END", [
                 Department::Coordination->value,
                 Department::CustomerService->value,
+                Department::CoordinationCustomerService->value,
                 Department::BranchManager->value,
             ])
             ->orderBy('name')

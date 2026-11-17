@@ -52,6 +52,7 @@ final class CvNotifier
             ->where(function ($query) {
                 $query->whereIn('department', [
                     Department::Coordination->value,
+                    Department::CoordinationCustomerService->value,
                     Department::BranchManager->value,
                 ]);
             })
@@ -164,7 +165,7 @@ final class CvNotifier
 
         return User::query()
             ->active()
-            ->where('department', Department::Coordination->value)
+            ->whereIn('department', Department::coordinationValues())
             ->whereHas('nationalities', fn ($q) => $q->where('nationalities.id', $nationalityId))
             ->get();
     }

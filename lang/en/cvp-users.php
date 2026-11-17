@@ -38,6 +38,7 @@ return [
     'departments' => [
         'coordination' => 'Coordination',
         'customer_service' => 'Customer service',
+        'coordination_customer_service' => 'Coordination & customer service',
         'branch_manager' => 'Branch manager',
     ],
 

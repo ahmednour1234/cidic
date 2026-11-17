@@ -102,12 +102,15 @@ class User extends Authenticatable
 
     public function isCoordination(): bool
     {
-        return $this->department === Department::Coordination->value;
+        return in_array($this->department, Department::coordinationValues(), true);
     }
 
     public function isCustomerService(): bool
     {
-        return $this->department === Department::CustomerService->value;
+        return in_array($this->department, [
+            Department::CustomerService->value,
+            Department::CoordinationCustomerService->value,
+        ], true);
     }
 
     public function isBranchManager(): bool

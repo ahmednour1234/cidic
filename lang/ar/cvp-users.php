@@ -38,6 +38,7 @@ return [
     'departments' => [
         'coordination' => 'التنسيق',
         'customer_service' => 'خدمة العملاء',
+        'coordination_customer_service' => 'منسق وخدمة عملاء',
         'branch_manager' => 'مدير فرع',
     ],
 

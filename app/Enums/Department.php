@@ -11,11 +11,19 @@ enum Department: string
 {
     case Coordination = 'coordination';
     case CustomerService = 'customer_service';
+    // Does both jobs: coordinator permissions plus customer-service ones.
+    case CoordinationCustomerService = 'coordination_customer_service';
     case BranchManager = 'branch_manager';
 
     public function label(): string
     {
         return __('cvp-users.departments.'.$this->value);
+    }
+
+    /** @return list<string> Departments that carry coordinator duties. */
+    public static function coordinationValues(): array
+    {
+        return [self::Coordination->value, self::CoordinationCustomerService->value];
     }
 
     /** @return list<string> */

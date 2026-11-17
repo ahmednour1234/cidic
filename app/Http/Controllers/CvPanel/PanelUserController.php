@@ -87,7 +87,7 @@ class PanelUserController extends Controller implements HasMiddleware
         $user->save();
 
         // Nationality links only mean anything for coordinators.
-        if ($data['department'] !== Department::Coordination->value) {
+        if (! in_array($data['department'], Department::coordinationValues(), true)) {
             $user->nationalities()->detach();
         }
 
@@ -111,7 +111,7 @@ class PanelUserController extends Controller implements HasMiddleware
         return view('cv-panel.coordinators', [
             'coordinators' => User::query()
                 ->active()
-                ->where('department', Department::Coordination->value)
+                ->whereIn('department', Department::coordinationValues())
                 ->with('nationalities')
                 ->orderBy('name')
                 ->get(),

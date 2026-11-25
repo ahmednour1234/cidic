@@ -81,6 +81,12 @@
                            class="cvp-btn cvp-btn-success justify-content-center">
                             اطلب عبر واتساب
                         </a>
+                        @if ($worker->hasVideo())
+                            <a href="{{ $worker->publicVideoUrl() }}" target="_blank" rel="noopener"
+                               class="cvp-btn cvp-btn-gold justify-content-center">
+                                &#9654; شاهد فيديو العاملة
+                            </a>
+                        @endif
                         <a href="{{ $pdfUrl }}" target="_blank" rel="noopener"
                            class="cvp-btn cvp-btn-ghost justify-content-center">
                             فتح السيرة PDF

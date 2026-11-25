@@ -62,6 +62,19 @@ class PublicCvController extends Controller
         ]);
     }
 
+    /** Streams an uploaded worker video; BinaryFileResponse handles Range for seeking. */
+    public function video(int $id)
+    {
+        $worker = $this->baseQuery()->findOrFail($id);
+        $disk = \Illuminate\Support\Facades\Storage::disk('video_private');
+
+        abort_unless(filled($worker->video_path) && $disk->exists($worker->video_path), 404);
+
+        return response()->file($disk->path($worker->video_path), [
+            'Cache-Control' => 'public, max-age=3600',
+        ]);
+    }
+
     /** Streams the CV inline. Reserved CVs get an explanation, not a bare 404. */
     public function pdf(Request $request, int $id): Response
     {

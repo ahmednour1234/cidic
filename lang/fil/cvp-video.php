@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'title' => 'Worker video',
+    'subtitle' => 'Add a video link (Google Drive / YouTube) or upload the video file so the client can watch it right away.',
+    'back' => 'Back to CVs',
+    'current' => 'Current video',
+    'none' => 'No video yet.',
+    'delete' => 'Delete video',
+    'confirm_delete' => 'Delete the video of this worker?',
+    'link_title' => 'Video link',
+    'link_hint' => 'In Google Drive, set sharing to: Anyone with the link can view.',
+    'save_link' => 'Save link',
+    'upload_title' => 'Upload video file',
+    'upload_hint' => 'MP4, MOV or WEBM up to :mb MB. It uploads in parts, so keep this page open until it finishes.',
+    'upload' => 'Upload video',
+    'uploading' => 'Uploading...',
+    'pick_file' => 'Choose a video file first.',
+    'too_big' => 'The video is larger than allowed.',
+    'bad_type' => 'Unsupported video format.',
+    'failed' => 'Video upload failed, please try again.',
+    'saved' => 'Video saved.',
+    'deleted' => 'Video deleted.',
+    'add' => '+ Video',
+    'manage' => 'Video',
+];

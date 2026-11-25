@@ -59,6 +59,15 @@ return [
             'throw' => false,
         ],
 
+        // Worker videos, streamed through a controller (with Range support)
+        // so only publicly visible CVs expose theirs.
+        'video_private' => [
+            'driver' => 'local',
+            'root' => storage_path('app/private/videos'),
+            'visibility' => 'private',
+            'throw' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

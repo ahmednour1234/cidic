@@ -44,6 +44,11 @@
                 <a href="{{ $pdfUrl }}" target="_blank" rel="noopener" class="cv-card-btn">
                     عرض السيرة PDF
                 </a>
+                @if ($worker->hasVideo())
+                    <a href="{{ $worker->publicVideoUrl() }}" target="_blank" rel="noopener" class="cv-card-btn">
+                        &#9654; الفيديو
+                    </a>
+                @endif
             </div>
         </article>
     </div>

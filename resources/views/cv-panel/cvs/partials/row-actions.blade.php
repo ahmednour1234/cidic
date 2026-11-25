@@ -12,6 +12,12 @@
 
 <div class="d-flex flex-wrap gap-1">
 
+    @if (CvPanelPermissions::canUploadToNationality($me, $worker->nationality_id))
+        <a href="{{ route('cv-panel.cvs.video', $worker->id) }}" class="cvp-btn cvp-btn-ghost">
+            {{ $worker->hasVideo() ? __('cvp-video.manage') : __('cvp-video.add') }}
+        </a>
+    @endif
+
     @if ($worker->status === Worker::STATUS_AVAILABLE)
 
         @if (CvPanelPermissions::canReserve($me))

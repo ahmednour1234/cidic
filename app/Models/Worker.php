@@ -46,6 +46,8 @@ class Worker extends Model
         'cv_path',
         'cv_disk',
         'original_cv_name',
+        'video_url',
+        'video_path',
         'cv_withdrawn_at',
         'status',
         'client_id',
@@ -304,5 +306,20 @@ class Worker extends Model
         return $nationalityIds === null
             ? $query
             : $query->whereIn('nationality_id', $nationalityIds);
+    }
+
+    public function hasVideo(): bool
+    {
+        return filled($this->video_path) || filled($this->video_url);
+    }
+
+    /** Where the public "watch video" button points, or null. */
+    public function publicVideoUrl(): ?string
+    {
+        if (filled($this->video_path)) {
+            return route('cvs.video', $this->id);
+        }
+
+        return $this->video_url ?: null;
     }
 }

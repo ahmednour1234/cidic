@@ -71,6 +71,9 @@ Route::get('/cvs', [PublicCvController::class, 'index'])->name('cvs.index');
 Route::get('/cvs/{id}', [PublicCvController::class, 'show'])
     ->whereNumber('id')
     ->name('cvs.show');
+Route::get('/cvs/{id}/video', [PublicCvController::class, 'video'])
+    ->whereNumber('id')
+    ->name('cvs.video');
 Route::get('/cvs/{id}/pdf', [PublicCvController::class, 'pdf'])
     ->whereNumber('id')
     ->name('cvs.pdf');

@@ -7,6 +7,7 @@ use App\Http\Controllers\CvPanel\LocaleController;
 use App\Http\Controllers\CvPanel\NotificationController;
 use App\Http\Controllers\CvPanel\PanelUserController;
 use App\Http\Controllers\CvPanel\ReservationController;
+use App\Http\Controllers\CvPanel\WorkerVideoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,6 +50,13 @@ Route::prefix('cv-panel')->name('cv-panel.')->middleware('cv.locale')->group(fun
         Route::delete('cvs', [CvController::class, 'bulkDestroy'])->name('cvs.bulk-destroy');
         Route::post('cvs/{id}/restore', [CvController::class, 'restore'])->name('cvs.restore');
         Route::post('cvs/{id}/assigned', [CvController::class, 'markAssigned'])->name('cvs.assigned');
+
+        /* Worker video: link or chunked upload */
+        Route::get('cvs/{id}/video', [WorkerVideoController::class, 'edit'])->name('cvs.video');
+        Route::put('cvs/{id}/video/link', [WorkerVideoController::class, 'saveLink'])->name('cvs.video.link');
+        Route::post('cvs/{id}/video/chunk', [WorkerVideoController::class, 'chunk'])->name('cvs.video.chunk');
+        Route::get('cvs/{id}/video/file', [WorkerVideoController::class, 'file'])->name('cvs.video.file');
+        Route::delete('cvs/{id}/video', [WorkerVideoController::class, 'destroy'])->name('cvs.video.destroy');
 
         /* Upload */
         Route::get('upload', [CvController::class, 'uploadForm'])->name('upload');
